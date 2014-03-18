@@ -37,7 +37,6 @@ module.exports = function(grunt) {
             dev: {
                 script: 'server.js',
                 options: {
-                    args: [],
                     ignore: ['public/**'],
                     ext: 'js',
                     nodeArgs: ['--debug'],
@@ -47,10 +46,21 @@ module.exports = function(grunt) {
                     },
                     cwd: __dirname
                 }
+            },
+            test: {
+                script: 'server.js',
+                options: {
+                    ignore: ['public/**'],
+                    ext: 'js',
+                    env: {
+                        PORT: 8000
+                    },
+                    cwd: __dirname
+                }
             }
         },
         concurrent: {
-            tasks: ['nodemon', 'watch'],
+            tasks: ['nodemon:dev', 'e2e:server', 'watch'],
             options: {
                 logConcurrentOutput: true
             }
@@ -71,17 +81,31 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'test/karma/karma.conf.js'
             }
+        },
+        protractor: {
+          e2e: {
+            options: {
+              configFile: "test/protractor/protractor.conf.js", // Default config file
+              keepAlive: true, // If false, the grunt process stops when the test fails.
+              noColor: false, // If true, protractor will not use colors in its output.
+              debug: false,
+              args: {
+                // Arguments passed to the command
+              }
+            }
+          }
         }
     });
 
     //Load NPM tasks
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-nodemon');
+    grunt.loadNpmTasks('grunt-protractor-runner');
 
     //Making grunt default to force in order not to break the project.
     grunt.option('force', true);
@@ -91,4 +115,26 @@ module.exports = function(grunt) {
 
     //Test task.
     grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+
+    grunt.registerTask('e2e:server', ['env:test', 'nodemon:test']);
+
+    grunt.registerTask('e2e:test', ['env:test', 'db:drop', 'protractor'])
+
+    grunt.registerTask('db:drop', 'Drop the DB', function() {
+      var config = require('./config/config');
+      var mongoose = require('mongoose');
+      var connection = mongoose.connect(config.db).connections[0];
+      var done = this.async();
+
+      connection.on("open", function() {
+        connection.db.dropDatabase(function(err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Successfully dropped ' + config.db + ' database');
+          }
+          connection.close(done);
+        })
+      });
+    })
 };
