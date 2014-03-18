@@ -100,7 +100,8 @@
                     var postArticleData = function() {
                         return {
                             title: 'An Article about MEAN',
-                            content: 'MEAN rocks!'
+                            content: 'MEAN rocks!',
+                            tags: "first, second, third"
                         };
                     };
 
@@ -109,13 +110,15 @@
                         return {
                             _id: '525cf20451979dea2c000001',
                             title: 'An Article about MEAN',
-                            content: 'MEAN rocks!'
+                            content: 'MEAN rocks!',
+                            tags: "first, second, third"
                         };
                     };
 
                     // fixture mock form input values
                     scope.title = 'An Article about MEAN';
                     scope.content = 'MEAN rocks!';
+                    scope.tags = "first, second, third";
 
                     // test post request is sent
                     $httpBackend.expectPOST('articles', postArticleData()).respond(responseArticleData());
@@ -127,6 +130,7 @@
                     // test form input(s) are reset
                     expect(scope.title).toEqual('');
                     expect(scope.content).toEqual('');
+                    expect(scope.tags).toEqual('');
 
                     // test URL location to new object
                     expect($location.path()).toBe('/articles/' + responseArticleData()._id);

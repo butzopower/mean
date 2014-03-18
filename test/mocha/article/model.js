@@ -27,6 +27,7 @@ describe('<Unit Test>', function() {
                 article = new Article({
                     title: 'Article Title',
                     content: 'Article Content',
+                    tags: 'some, set, of, tags',
                     user: user
                 });
 
@@ -36,9 +37,15 @@ describe('<Unit Test>', function() {
 
         describe('Method Save', function() {
             it('should be able to save without problems', function(done) {
-                return article.save(function(err) {
+                article.save(function(err) {
                     should.not.exist(err);
-                    done();
+
+                    Article.find({ 'title': 'Article Title' }, function (err, articles) {
+                      articles[0].title.should.equal('Article Title');
+                      articles[0].content.should.equal('Article Content');
+                      articles[0].tags.should.equal('some, set, of, tags');
+                      done();
+                    });
                 });
             });
 

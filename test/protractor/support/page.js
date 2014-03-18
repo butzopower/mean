@@ -6,7 +6,7 @@ exports.page = {
   },
 
   clickOn: function (text) {
-    element(by.xpath("(//a | //button)[contains(text(),'" + text + "')]")).click();
+    element(by.xpath("(//a | //button)[text()[contains(.,'" + text + "')]]")).click();
   },
 
   text: function (selector) {
@@ -14,8 +14,16 @@ exports.page = {
     return element(by.css(selector)).getText();
   },
 
+  input: function(placeholder) {
+    return element(by.css("[placeholder='" + placeholder  + "']"));
+  },
+
+  inputValue: function(placeholder) {
+    return this.input(placeholder).getAttribute('value');
+  },
+
   fillIn: function (placeholder, text) {
-    element(by.css("[placeholder='" + placeholder + "']")).sendKeys(text);
+    this.input(placeholder).sendKeys(text);
   },
 
   takeScreenshot: function (filename) {

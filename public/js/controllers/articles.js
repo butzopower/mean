@@ -6,7 +6,8 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
     $scope.create = function() {
         var article = new Articles({
             title: this.title,
-            content: this.content
+            content: this.content,
+            tags: this.tags
         });
         article.$save(function(response) {
             $location.path('articles/' + response._id);
@@ -14,6 +15,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
 
         this.title = '';
         this.content = '';
+        this.tags = '';
     };
 
     $scope.remove = function(article) {
