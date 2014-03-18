@@ -20,10 +20,10 @@ exports.page = {
   },
 
   fillIn: function (placeholder, text) {
-    element(by.css("input[placeholder='" + placeholder + "']")).sendKeys(text);
+    element(by.css("[placeholder='" + placeholder + "']")).sendKeys(text);
   },
 
-  takeScreenShot: function (filename) {
+  takeScreenshot: function (filename) {
     filename = filename || "screenshot.png";
     browser.takeScreenshot().then(function (png) {
       var stream = fs.createWriteStream(filename);

@@ -14,7 +14,7 @@ exports.user = {
   signin: function (user) {
     user = user || {};
     page.get("/signin");
-    page.fillIn("Email", user.name || seededUsers[0].name);
+    page.fillIn("Email", user.email || seededUsers[0].email);
     page.fillIn("Password", user.password || seededUsers[0].password);
     page.clickOn("Sign in");
   }
