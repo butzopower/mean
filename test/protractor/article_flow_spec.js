@@ -4,7 +4,7 @@ var page = require('./support/page.js').page;
 describe("Article flow", function () {
   describe("Adding an article", function () {
     beforeEach(function () {
-      user.signup();
+      user.signin();
     });
 
     it("should be able to add a complete article", function () {

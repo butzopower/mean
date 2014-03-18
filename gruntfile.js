@@ -118,7 +118,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('e2e:server', ['env:test', 'nodemon:test']);
 
-    grunt.registerTask('e2e:test', ['env:test', 'db:drop', 'protractor'])
+    grunt.registerTask('e2e:test', ['env:test', 'db:drop', 'db:seed', 'protractor'])
 
     grunt.registerTask('db:drop', 'Drop the DB', function() {
       var config = require('./config/config');
@@ -136,5 +136,30 @@ module.exports = function(grunt) {
           connection.close(done);
         })
       });
-    })
+    });
+
+    grunt.registerTask('db:seed', 'Seed the DB with a user', function () {
+      var config = require('./config/config');
+      var mongoose = require('mongoose');
+      var connection = mongoose.connect(config.db).connections[0];
+      var done = this.async();
+
+      mongoose.Model.seed = function(entities) {
+        var promise = new mongoose.Promise;
+        this.create(entities, function(err) {
+          if(err) { promise.reject(err); }
+          else    { promise.resolve(); }
+        });
+        return promise;
+      };
+
+      connection.on("open", function() {
+        require("./app/models/user");
+        var User = mongoose.model("User");
+        User.seed(require("./db/seeds/user.json"))
+          .then(function() {
+            connection.close(done);
+          });
+      });
+    });
 };
