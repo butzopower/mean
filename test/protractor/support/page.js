@@ -6,12 +6,7 @@ exports.page = {
   },
 
   clickOn: function (text) {
-    // TODO: needs to be blocking! Also cleanup
-    browser.findElement(by.partialLinkText(text)).then(function(element) {
-      element.click();
-    }, function(error) {
-      element(by.xpath("//button[contains(text(),'" + text + "')]")).click();
-    });
+    element(by.xpath("(//a | //button)[contains(text(),'" + text + "')]")).click();
   },
 
   text: function (selector) {
