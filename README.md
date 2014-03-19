@@ -134,12 +134,17 @@ git push heroku master
 
 ```bash
 git clone jasmine
-git co -b jasmine-node
+cd jasmine
+git co jasmine-node
 npm install
+cd ..
 git clone jasmine-npm
+cd jasmine-npm
+npm install
 npm install ../jasmine
 npm install -g ./
-export JASMINE_CONFIG_PATH=jasmine
+cd ../mean
+JASMINE_CONFIG_PATH=path/to/relative/path/jasmine.json jasmine
 ```
 
 ## Credits

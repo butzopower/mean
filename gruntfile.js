@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         },
         karma: {
             unit: {
-                configFile: 'test/client/karma.conf.js'
+                configFile: 'test/client/support/karma.conf.js'
             }
         },
         protractor: {

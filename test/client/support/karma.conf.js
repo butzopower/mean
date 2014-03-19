@@ -7,7 +7,7 @@ module.exports = function(config) {
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../',
+        basePath: '../../../',
 
 
         // frameworks to use
@@ -33,7 +33,7 @@ module.exports = function(config) {
             'public/js/controllers/index.js',
             'public/js/controllers/header.js',
             'public/js/init.js',
-            'test/client/unit/**/*.js'
+            'test/client/**/*[Ss]pec.js'
         ],
 
 
