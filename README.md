@@ -130,6 +130,18 @@ git push heroku master
   * Visit us at [Linnovate.net](http://www.linnovate.net/).
   * Visit our [Ninja's Zone](http://www.meanleanstartupmachine.com/) for extended support.
 
+## WIP Jasmine 2.0 Support
+
+```bash
+git clone jasmine
+git co -b jasmine-node
+npm install
+git clone jasmine-npm
+npm install ../jasmine
+npm install -g ./
+export JASMINE_CONFIG_PATH=jasmine
+```
+
 ## Credits
 * Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
 * The MEAN name was coined by [Valeri Karpov](http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and)
