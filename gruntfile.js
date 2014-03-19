@@ -65,27 +65,21 @@ module.exports = function(grunt) {
                 logConcurrentOutput: true
             }
         },
-        mochaTest: {
-            options: {
-                reporter: 'spec',
-                require: 'server.js'
-            },
-            src: ['test/mocha/**/*.js']
-        },
         env: {
             test: {
-                NODE_ENV: 'test'
+                NODE_ENV: 'test',
+                PORT: 6000
             }
         },
         karma: {
             unit: {
-                configFile: 'test/karma/karma.conf.js'
+                configFile: 'test/client/karma.conf.js'
             }
         },
         protractor: {
           e2e: {
             options: {
-              configFile: "test/protractor/protractor.conf.js", // Default config file
+              configFile: "test/e2e/support/protractor.conf.js", // Default config file
               keepAlive: true, // If false, the grunt process stops when the test fails.
               noColor: false, // If true, protractor will not use colors in its output.
               debug: false,
@@ -103,7 +97,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-protractor-runner');
 
@@ -114,7 +107,12 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['jshint', 'concurrent']);
 
     //Test task.
-    grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+    grunt.registerTask('test', ['env:test', 'serverSpecs', 'karma:unit']);
+
+    grunt.registerTask('serverSpecs', 'This will run jasmine server specs', function () {
+      var shell = require("shelljs");
+      shell.exec("JASMINE_CONFIG_PATH=test/server/support/jasmine.json jasmine");
+    });
 
     grunt.registerTask('e2e:server', ['env:test', 'nodemon:test']);
 
@@ -137,6 +135,7 @@ module.exports = function(grunt) {
         })
       });
     });
+
 
     grunt.registerTask('db:seed', 'Seed the DB with a user', function () {
       var config = require('./config/config');

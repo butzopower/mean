@@ -35,11 +35,11 @@ $ npm install -g bower
   We recommend using [Grunt](https://github.com/gruntjs/grunt-cli) to start the server:
 
     $ grunt
-    
+
   When not using grunt you can use:
 
     $ node server
-    
+
   Then open a browser and go to:
 
     http://localhost:3000
@@ -81,7 +81,7 @@ Bower Clean Cache:
 $ bower cache clean
 ```
 
- 
+
 ## Configuration
 All configuration is specified in the [config](config/) folder, particularly the [config.js](config/config.js) file and the [env](config/env/) files. Here you will need to specify your application name, database name, as well as hook up any social app keys if you want integration with Twitter, Facebook, GitHub or Google.
 
@@ -133,7 +133,7 @@ git push heroku master
 ## Credits
 * Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
 * The MEAN name was coined by [Valeri Karpov](http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and)
-* MEAN could not be as great as it is without the contribution of the [following people](https://github.com/linnovate/mean/blob/master/AUTHORS). 
+* MEAN could not be as great as it is without the contribution of the [following people](https://github.com/linnovate/mean/blob/master/AUTHORS).
 
 ## License
 (The MIT License)
