@@ -20,10 +20,6 @@ angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
         url: '/articles/:articleId/edit',
         templateUrl: 'views/articles/edit.html'
     })
-      .state('article by id', {
-        url: '/articles/:articleId',
-        templateUrl: 'views/articles/view.html'
-    })
       .state('home', {
         url: '/',
         templateUrl: 'views/index.html'

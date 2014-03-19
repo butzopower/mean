@@ -133,7 +133,7 @@
                     expect(scope.tags).toEqual('');
 
                     // test URL location to new object
-                    expect($location.path()).toBe('/articles/' + responseArticleData()._id);
+                    expect($location.path()).toBe('/articles');
                 });
 
             it('$scope.update() should update a valid article', inject(function(Articles) {
@@ -169,7 +169,7 @@
                 $httpBackend.flush();
 
                 // test URL location to new object
-                expect($location.path()).toBe('/articles/' + putArticleData()._id);
+                expect($location.path()).toBe('/articles');
 
             }));
 

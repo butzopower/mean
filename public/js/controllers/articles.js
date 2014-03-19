@@ -10,7 +10,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
             tags: this.tags
         });
         article.$save(function(response) {
-            $location.path('articles/' + response._id);
+            $location.path('articles');
         });
 
         this.title = '';
@@ -42,7 +42,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
         article.updated.push(new Date().getTime());
 
         article.$update(function() {
-            $location.path('articles/' + article._id);
+            $location.path('articles');
         });
     };
 

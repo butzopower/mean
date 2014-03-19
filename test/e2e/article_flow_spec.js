@@ -19,15 +19,7 @@ describe('Article flow', function () {
       page.fillIn('Tags', 'intro, hello, first');
       page.clickOn('Submit');
 
-      // Show Page
-      expect(page.text()).toContain('My first article');
-      expect(page.text()).toContain('Some content');
-      expect(page.text()).toContain('intro');
-      expect(page.text()).toContain('hello');
-      expect(page.text()).toContain('first');
-
       // Index Page
-      page.get('/#!/articles');
 
       expect(page.text()).toContain('My first article');
       expect(page.text()).toContain('Some content');
@@ -36,8 +28,7 @@ describe('Article flow', function () {
       expect(page.text()).toContain('first');
 
       // Edit Page
-      page.clickOn('My first article');
-      page.clickOn('Edit');
+      $("li.my-first-article a.edit").click();
 
       expect(page.inputValue('Title')).toEqual('My first article');
       expect(page.inputValue('Tags')).toEqual('intro, hello, first');
