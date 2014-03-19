@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         protractor: {
           e2e: {
             options: {
-              configFile: "test/e2e/support/protractor.conf.js", // Default config file
+              configFile: 'test/e2e/support/protractor.conf.js', // Default config file
               keepAlive: true, // If false, the grunt process stops when the test fails.
               noColor: false, // If true, protractor will not use colors in its output.
               debug: false,
@@ -107,16 +107,17 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['jshint', 'concurrent']);
 
     //Test task.
-    grunt.registerTask('test', ['env:test', 'serverSpecs', 'karma:unit']);
+    grunt.registerTask('test', ['env:test', 'db:drop', 'test:server', 'karma:unit']);
 
-    grunt.registerTask('serverSpecs', 'This will run jasmine server specs', function () {
-      var shell = require("shelljs");
-      shell.exec("JASMINE_CONFIG_PATH=test/server/support/jasmine.json jasmine");
+    grunt.registerTask('test:server', 'This will run jasmine server specs', function () {
+      var shell = require('shelljs');
+
+      shell.exec('JASMINE_CONFIG_PATH=test/server/support/jasmine.json jasmine');
     });
 
     grunt.registerTask('e2e:server', ['env:test', 'nodemon:test']);
 
-    grunt.registerTask('e2e:test', ['env:test', 'db:drop', 'db:seed', 'protractor'])
+    grunt.registerTask('e2e:test', ['env:test', 'db:drop', 'db:seed', 'protractor']);
 
     grunt.registerTask('db:drop', 'Drop the DB', function() {
       var config = require('./config/config');
@@ -124,7 +125,7 @@ module.exports = function(grunt) {
       var connection = mongoose.connect(config.db).connections[0];
       var done = this.async();
 
-      connection.on("open", function() {
+      connection.on('open', function() {
         connection.db.dropDatabase(function(err) {
           if (err) {
             console.log(err);
@@ -132,7 +133,7 @@ module.exports = function(grunt) {
             console.log('Successfully dropped ' + config.db + ' database');
           }
           connection.close(done);
-        })
+        });
       });
     });
 
@@ -144,7 +145,7 @@ module.exports = function(grunt) {
       var done = this.async();
 
       mongoose.Model.seed = function(entities) {
-        var promise = new mongoose.Promise;
+        var promise = new mongoose.Promise();
         this.create(entities, function(err) {
           if(err) { promise.reject(err); }
           else    { promise.resolve(); }
@@ -152,10 +153,10 @@ module.exports = function(grunt) {
         return promise;
       };
 
-      connection.on("open", function() {
-        require("./app/models/user");
-        var User = mongoose.model("User");
-        User.seed(require("./db/seeds/user.json"))
+      connection.on('open', function() {
+        require('./app/models/user');
+        var User = mongoose.model('User');
+        User.seed(require('./db/seeds/user.json'))
           .then(function() {
             connection.close(done);
           });

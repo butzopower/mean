@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 
 exports.page = {
@@ -6,16 +8,16 @@ exports.page = {
   },
 
   clickOn: function (text) {
-    element(by.xpath("(//a | //button)[text()[contains(.,'" + text + "')]]")).click();
+    element(by.xpath('(//a | //button)[text()[contains(.,"' + text + '")]]')).click();
   },
 
   text: function (selector) {
-    selector = selector || "body";
+    selector = selector || 'body';
     return element(by.css(selector)).getText();
   },
 
   input: function(placeholder) {
-    return element(by.css("[placeholder='" + placeholder  + "']"));
+    return element(by.css('[placeholder="' + placeholder  + '"]'));
   },
 
   inputValue: function(placeholder) {
@@ -27,7 +29,7 @@ exports.page = {
   },
 
   takeScreenshot: function (filename) {
-    filename = filename || "screenshot.png";
+    filename = filename || 'screenshot.png';
     browser.takeScreenshot().then(function (png) {
       var stream = fs.createWriteStream(filename);
       stream.write(new Buffer(png, 'base64'));
