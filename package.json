@@ -60,10 +60,10 @@
   "devDependencies": {
     "supertest": "0.8.2",
     "grunt-contrib-watch": "latest",
-    "grunt-jasmine-node": "latest",
     "grunt-contrib-jshint": "latest",
     "grunt-nodemon": "0.2.0",
     "grunt-concurrent": "latest",
+    "jasmine-npm": "https://github.com/pivotal/jasmine-npm/tarball/master",
     "karma-coverage": "~0.1.0",
     "karma-script-launcher": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
