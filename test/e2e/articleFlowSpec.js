@@ -31,7 +31,7 @@ describe('Article flow', function () {
       expect(page.text()).toContain('first');
 
       // Edit Page
-      $("li.my-first-article a.edit").click();
+      $('li.my-first-article a.edit').click();
 
       page.fillIn('Content', 'My updated content');
       page.clickOn('Submit');
@@ -39,7 +39,7 @@ describe('Article flow', function () {
       expect(page.text()).toContain('My updated content');
 
       // Delete
-      $("li.my-first-article a.delete").click();
+      $('li.my-first-article a.delete').click();
       expect(page.text()).not.toContain('My first article');
     });
   });

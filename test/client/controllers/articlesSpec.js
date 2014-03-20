@@ -136,8 +136,8 @@
                 //$httpBackend.expectPUT(/articles\/([0-9a-fA-F]{24})$/, putArticleData()).respond();
                 /*
                 Error: Expected PUT /articles\/([0-9a-fA-F]{24})$/ with different data
-                EXPECTED: {"_id":"525a8422f6d0f87f0e407a33","title":"An Article about MEAN","to":"MEAN is great!"}
-                GOT:      {"_id":"525a8422f6d0f87f0e407a33","title":"An Article about MEAN","to":"MEAN is great!","updated":[1383534772975]}
+                EXPECTED: {'_id':'525a8422f6d0f87f0e407a33','title':'An Article about MEAN','to':'MEAN is great!'}
+                GOT:      {'_id':'525a8422f6d0f87f0e407a33','title':'An Article about MEAN','to':'MEAN is great!','updated':[1383534772975]}
                 */
 
                 // run controller
@@ -174,25 +174,25 @@
 
                 }));
 
-            it("$scope.addArticle() should define the addTemplate", function () {
+            it('$scope.addArticle() should define the addTemplate', function () {
               expect(scope.addTemplate).toBeUndefined();
               scope.addArticle();
               expect(scope.addTemplate).toBe('views/articles/create.html');
             });
 
-            it("$scope.addCancel() should undefine the addTemplate", function () {
+            it('$scope.addCancel() should undefine the addTemplate', function () {
               scope.addTemplate = 'foobar';
               scope.addCancel();
               expect(scope.addTemplate).not.toBeDefined();
             });
 
-            it("$scope.editArticle() should define the addTemplate", function () {
+            it('$scope.editArticle() should define the addTemplate', function () {
               expect(scope.editTemplate).toBeUndefined();
               scope.editArticle({});
               expect(scope.article.editTemplate).toBe('views/articles/edit.html');
             });
 
-            it("$scope.editCancel() should undefine the addTemplate", function () {
+            it('$scope.editCancel() should undefine the addTemplate', function () {
               scope.article = {editTemplate: 'foobar'};
               scope.editCancel();
               expect(scope.article).not.toBeDefined();

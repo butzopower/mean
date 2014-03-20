@@ -12,7 +12,7 @@ describe('Filters', function () {
       expect(this.filter('foo bar')).toEqual('foo-bar');
     });
 
-    it("copes with camecase", function () {
+    it('copes with camecase', function () {
       expect(this.filter('FooBar')).toEqual('foo-bar');
     });
   });

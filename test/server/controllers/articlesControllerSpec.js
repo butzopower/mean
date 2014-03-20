@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 describe('the articles controller', function () {
   var req = {body: {}, user: {}},
@@ -43,7 +43,7 @@ describe('the articles controller', function () {
     afterEach(function (done) {
       Article.remove({}, function () {
         User.remove({}, done);
-      })
+      });
     });
 
     it('should create a new article', function (done) {
@@ -79,7 +79,7 @@ describe('the articles controller', function () {
           expect(returnPath).toEqual('users/signup');
 
           done();
-        })
+        });
       });
     });
 
