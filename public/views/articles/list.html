@@ -1,4 +1,10 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
+	<a data-ng-click="addArticle()">Add</a>
+	<div class="slide-animate-container">
+		<div class="slide-animate" data-ng-include="addTemplate"></div>
+	</div>
+
+
 	<ul class="articles unstyled">
 		<li data-ng-repeat="article in articles" data-ng-class="article.title | dasherize">
 			<span>{{article.created | date:'medium'}}</span> /
@@ -10,7 +16,7 @@
 				<a class="btn edit" href="/#!/articles/{{article._id}}/edit">
 					<i class="glyphicon glyphicon-edit"></i> Edit
 				</a>
-				<a class="btn delete" data-ng-click="remove();">
+				<a class="btn delete" data-ng-click="remove(article);">
 					<i class="glyphicon glyphicon-trash"></i> Delete
 				</a>
 			</div>

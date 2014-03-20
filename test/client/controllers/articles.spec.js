@@ -119,6 +119,8 @@
                     scope.title = 'An Article about MEAN';
                     scope.content = 'MEAN rocks!';
                     scope.tags = 'first, second, third';
+                    scope.addTemplate = 'views/articles/create.html';
+                    scope.articles = [{title: 'Old Article'}];
 
                     // test post request is sent
                     $httpBackend.expectPOST('articles', postArticleData()).respond(responseArticleData());
@@ -131,9 +133,8 @@
                     expect(scope.title).toEqual('');
                     expect(scope.content).toEqual('');
                     expect(scope.tags).toEqual('');
-
-                    // test URL location to new object
-                    expect($location.path()).toBe('/articles');
+                    expect(scope.addTemplate).toBeUndefined();
+                    expect(scope.articles[0].title).toEqual('An Article about MEAN');
                 });
 
             it('$scope.update() should update a valid article', inject(function(Articles) {
@@ -197,6 +198,12 @@
                     expect(scope.articles.length).toBe(0);
 
                 }));
+
+            it("$scope.addArticle() should define the addTemplate", function () {
+              expect(scope.addTemplate).toBeUndefined();
+              scope.addArticle();
+              expect(scope.addTemplate).toBe('views/articles/create.html');
+            });
         });
     });
 }());

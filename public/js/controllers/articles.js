@@ -10,7 +10,8 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
             tags: this.tags
         });
         article.$save(function(response) {
-            $location.path('articles');
+          $scope.articles.unshift(response);
+          $scope.addTemplate = undefined;
         });
 
         this.title = '';
@@ -27,10 +28,6 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
                     $scope.articles.splice(i, 1);
                 }
             }
-        }
-        else {
-            $scope.article.$remove();
-            $location.path('articles');
         }
     };
 
@@ -57,6 +54,11 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
             articleId: $stateParams.articleId
         }, function(article) {
             $scope.article = article;
+            $scope.addTempalte = undefined;
         });
+    };
+
+    $scope.addArticle = function() {
+      $scope.addTemplate = 'views/articles/create.html';
     };
 }]);

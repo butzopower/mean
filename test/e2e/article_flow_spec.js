@@ -10,7 +10,9 @@ describe('Article flow', function () {
     });
 
     it('should be able to add a complete article', function () {
-      page.get('/#!/articles/create');
+      page.get('/#!/articles');
+
+      page.clickOn('Add');
 
       expect(page.text()).toContain('Title');
 
@@ -20,6 +22,8 @@ describe('Article flow', function () {
       page.clickOn('Submit');
 
       // Index Page
+
+      expect(page.text()).not.toContain('Title');
 
       expect(page.text()).toContain('My first article');
       expect(page.text()).toContain('Some content');
@@ -33,6 +37,11 @@ describe('Article flow', function () {
       expect(page.inputValue('Title')).toEqual('My first article');
       expect(page.inputValue('Tags')).toEqual('intro, hello, first');
       expect(page.inputValue('Content')).toEqual('Some content');
+
+      // Delete
+      page.get('/#!/articles');
+      $("li.my-first-article a.delete").click();
+      expect(page.text()).not.toContain('My first article');
     });
   });
 });

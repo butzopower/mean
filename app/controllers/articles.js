@@ -6,7 +6,7 @@
 var mongoose = require('mongoose'),
     Article = mongoose.model('Article'),
     _ = require('lodash');
-    
+
 /**
  * Find article by id
  */
@@ -33,7 +33,10 @@ exports.create = function(req, res) {
                 article: article
             });
         } else {
-            res.jsonp(article);
+          var data = article.toObject();
+          data.user = _(req.user).pick('name', 'username').value();
+          data.user._id = req.user.id;
+          res.jsonp(data);
         }
     });
 };
