@@ -5,3 +5,10 @@ env:
   - NODE_ENV=travis
 services:
   - mongodb
+install:
+  - npm install
+before_script:
+  - grunt e2e:server &
+script:
+  - grunt test
+  - grunt e2e:test
