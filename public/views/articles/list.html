@@ -1,8 +1,8 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
-	<a data-ng-click="addArticle()">Add</a>
-	<div class="slide-animate-container">
-		<div class="slide-animate" data-ng-include="addTemplate"></div>
-	</div>
+	<a data-ng-click="addArticle()">
+		<i class="glyphicon glyphicon-plus"></i> Add
+	</a>
+	<div data-ng-include="addTemplate"></div>
 
 
 	<ul class="articles unstyled">

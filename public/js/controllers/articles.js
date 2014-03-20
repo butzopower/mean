@@ -61,4 +61,8 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
     $scope.addArticle = function() {
       $scope.addTemplate = 'views/articles/create.html';
     };
+
+    $scope.addCancel = function() {
+      $scope.addTemplate = undefined;
+    };
 }]);

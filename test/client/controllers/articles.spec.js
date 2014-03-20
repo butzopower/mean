@@ -204,6 +204,12 @@
               scope.addArticle();
               expect(scope.addTemplate).toBe('views/articles/create.html');
             });
+
+            it("$scope.addCancel() should undefine the addTemplate", function () {
+              scope.addTemplate = 'foobar';
+              scope.addCancel();
+              expect(scope.addTemplate).not.toBeDefined();
+            });
         });
     });
 }());
