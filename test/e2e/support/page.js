@@ -25,7 +25,9 @@ exports.page = {
   },
 
   fillIn: function (placeholder, text) {
-    this.input(placeholder).sendKeys(text);
+    var input = this.input(placeholder);
+    input.clear();
+    input.sendKeys(text);
   },
 
   takeScreenshot: function (filename) {
