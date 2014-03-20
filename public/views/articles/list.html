@@ -1,7 +1,7 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
 	<h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a data-ng-click="addArticle()">Create One</a>?</h1>
 
-	<div>Search: <input type="search" ng-model="query" placeholder="Search"></div>
+	<div>Search: <input type="search" ng-model="query" results="5" placeholder="Search"></div>
 
 	<a data-ng-click="addArticle()">
 		<i class="glyphicon glyphicon-plus"></i> Add
