@@ -49,20 +49,21 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
         });
     };
 
-    $scope.findOne = function() {
-        Articles.get({
-            articleId: $stateParams.articleId
-        }, function(article) {
-            $scope.article = article;
-            $scope.addTempalte = undefined;
-        });
-    };
-
     $scope.addArticle = function() {
       $scope.addTemplate = 'views/articles/create.html';
     };
 
     $scope.addCancel = function() {
       $scope.addTemplate = undefined;
+    };
+
+    $scope.editArticle = function(article) {
+      $scope.article = article;
+      $scope.article.editTemplate = 'views/articles/edit.html';
+    };
+
+    $scope.editCancel = function() {
+      $scope.article.editTemplate = undefined;
+      $scope.article = undefined;
     };
 }]);

@@ -67,31 +67,6 @@
 
                 });
 
-            it('$scope.findOne() should create an array with one article object fetched ' +
-                'from XHR using a articleId URL parameter', function() {
-                    // fixture URL parament
-                    $stateParams.articleId = '525a8422f6d0f87f0e407a33';
-
-                    // fixture response object
-                    var testArticleData = function() {
-                        return {
-                            title: 'An Article about MEAN',
-                            content: 'MEAN rocks!'
-                        };
-                    };
-
-                    // test expected GET request with response object
-                    $httpBackend.expectGET(/articles\/([0-9a-fA-F]{24})$/).respond(testArticleData());
-
-                    // run controller
-                    scope.findOne();
-                    $httpBackend.flush();
-
-                    // test scope value
-                    expect(scope.article).toEqualData(testArticleData());
-
-                });
-
             it('$scope.create() with valid form data should send a POST request ' +
                 'with the form input values and then ' +
                 'locate to new object URL', function() {
@@ -209,6 +184,18 @@
               scope.addTemplate = 'foobar';
               scope.addCancel();
               expect(scope.addTemplate).not.toBeDefined();
+            });
+
+            it("$scope.editArticle() should define the addTemplate", function () {
+              expect(scope.editTemplate).toBeUndefined();
+              scope.editArticle({});
+              expect(scope.article.editTemplate).toBe('views/articles/edit.html');
+            });
+
+            it("$scope.editCancel() should undefine the addTemplate", function () {
+              scope.article = {editTemplate: 'foobar'};
+              scope.editCancel();
+              expect(scope.article).not.toBeDefined();
             });
         });
     });

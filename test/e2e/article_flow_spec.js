@@ -22,7 +22,6 @@ describe('Article flow', function () {
       page.clickOn('Submit');
 
       // Index Page
-
       expect(page.text()).not.toContain('Title');
 
       expect(page.text()).toContain('My first article');
@@ -34,12 +33,12 @@ describe('Article flow', function () {
       // Edit Page
       $("li.my-first-article a.edit").click();
 
-      expect(page.inputValue('Title')).toEqual('My first article');
-      expect(page.inputValue('Tags')).toEqual('intro, hello, first');
-      expect(page.inputValue('Content')).toEqual('Some content');
+      page.fillIn('Content', 'My updated content');
+      page.clickOn('Submit');
+      expect(page.text()).not.toContain('Title');
+      expect(page.text()).toContain('My updated content');
 
       // Delete
-      page.get('/#!/articles');
       $("li.my-first-article a.delete").click();
       expect(page.text()).not.toContain('My first article');
     });

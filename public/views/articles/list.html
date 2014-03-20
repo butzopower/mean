@@ -13,12 +13,13 @@
 			<div>{{article.tags}}</div>
 			<div>{{article.content}}</div>
 			<div data-ng-show="global.user._id == article.user._id">
-				<a class="btn edit" href="/#!/articles/{{article._id}}/edit">
+				<a class="btn edit" data-ng-click="editArticle(article)">
 					<i class="glyphicon glyphicon-edit"></i> Edit
 				</a>
 				<a class="btn delete" data-ng-click="remove(article);">
 					<i class="glyphicon glyphicon-trash"></i> Delete
 				</a>
+				<div data-ng-include="article.editTemplate"></div>
 			</div>
 		</li>
 	</ul>
