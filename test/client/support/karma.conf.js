@@ -46,21 +46,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
     //reporters: ['progress'],
-    reporters: ['progress', 'coverage'],
-
-    // coverage
-    preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
-      'public/js/controllers/*.js': ['coverage'],
-      'public/js/services/*.js': ['coverage']
-    },
-
-    coverageReporter: {
-      type: 'html',
-      dir: 'test/coverage/'
-    },
+    reporters: ['progress'],
 
     // web server port
     port: 9876,
