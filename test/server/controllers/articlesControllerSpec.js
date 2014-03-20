@@ -65,7 +65,7 @@ describe('the articles controller', function () {
         expect(returnValue.title).toEqual('New Article');
         expect(returnValue.tags).toEqual('cool new');
         expect(returnValue.content).toEqual('blah blah');
-        expect(returnValue.user).toEqual({name: 'John Doe', username: 'jdoe', _id: req.user.id});
+        expect(returnValue.user).toEqual({name: 'John Fail!!!', username: 'jdoe', _id: req.user.id});
 
         done();
       });
