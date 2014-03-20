@@ -1,12 +1,12 @@
 'use strict';
 
-describe('Model User:', function() {
+describe('Model User:', function () {
   var mongoose = require('mongoose'),
-      User = mongoose.model('User'),
-      user,
-      user2;
+    User = mongoose.model('User'),
+    user,
+    user2;
 
-  beforeEach(function(done) {
+  beforeEach(function (done) {
     var userParams = {
       name: 'Full name',
       email: 'test@test.com',
@@ -20,35 +20,35 @@ describe('Model User:', function() {
     done();
   });
 
-  afterEach(function(done) {
+  afterEach(function (done) {
     user.remove();
     user2.remove();
     done();
   });
 
-  describe('Method Save', function() {
-    it('should begin without the test user', function(done) {
-      User.find({ email: 'test@test.com' }, function(err, users) {
+  describe('Method Save', function () {
+    it('should begin without the test user', function (done) {
+      User.find({ email: 'test@test.com' }, function (err, users) {
         expect(users.length).toBe(0);
         done();
       });
     });
 
-    it('should be able to save without problems', function(done) {
+    it('should be able to save without problems', function (done) {
       user.save(done);
     });
 
-    it('should fail to save an existing user again', function(done) {
+    it('should fail to save an existing user again', function (done) {
       user.save();
-      user2.save(function(error) {
+      user2.save(function (error) {
         expect(error.err).toContain('dup key');
         done();
       });
     });
 
-    it('should show an error when try to save without name', function(done) {
+    it('should show an error when try to save without name', function (done) {
       user.name = '';
-      user.save(function(error) {
+      user.save(function (error) {
         expect(error.errors.name.message).toContain('is required');
         done();
       });

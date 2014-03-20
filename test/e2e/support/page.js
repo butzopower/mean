@@ -16,11 +16,11 @@ exports.page = {
     return element(by.css(selector)).getText();
   },
 
-  input: function(placeholder) {
-    return element(by.css('[placeholder="' + placeholder  + '"]'));
+  input: function (placeholder) {
+    return element(by.css('[placeholder="' + placeholder + '"]'));
   },
 
-  inputValue: function(placeholder) {
+  inputValue: function (placeholder) {
     return this.input(placeholder).getAttribute('value');
   },
 

@@ -13,7 +13,7 @@ exports.user = {
     page.fillIn('Password', user.password || 'password');
     page.clickOn('Sign up');
   },
-  
+
   signin: function (user) {
     user = user || {};
     page.get('/signin');

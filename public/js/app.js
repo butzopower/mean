@@ -3,7 +3,8 @@
 angular.module('mean', [
   'ngCookies', 'ngResource',
   'ui.bootstrap', 'ui.router',
-  'mean.system', 'mean.articles', 'mean.filters']);
+  'mean.system', 'mean.articles', 'mean.filters'
+]);
 
 angular.module('mean.system', []);
 angular.module('mean.articles', []);

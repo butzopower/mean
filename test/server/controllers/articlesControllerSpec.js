@@ -2,34 +2,34 @@
 
 describe('the articles controller', function () {
   var req = {body: {}, user: {}},
-      mongoose = require('mongoose'),
-      User = mongoose.model('User'),
-      Article = mongoose.model('Article'),
-      articlesController = require('../../../app/controllers/articles'),
-      returnPath,
-      returnValue,
-      subject = function (req, done) {
-        User.create({
-          name: 'John Doe',
-          email: 'john.doe@example.com',
-          username: 'jdoe',
-          password: 'password'
-        }, function(err, user) {
-          req.user = user;
+    mongoose = require('mongoose'),
+    User = mongoose.model('User'),
+    Article = mongoose.model('Article'),
+    articlesController = require('../../../app/controllers/articles'),
+    returnPath,
+    returnValue,
+    subject = function (req, done) {
+      User.create({
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        username: 'jdoe',
+        password: 'password'
+      }, function (err, user) {
+        req.user = user;
 
-          articlesController.create(req, {
-            send: function(path, json) {
-              returnPath = path;
-              returnValue = json;
-              done();
-            },
-            jsonp: function(json) {
-              returnValue = json;
-              done();
-            }
-          });
+        articlesController.create(req, {
+          send: function (path, json) {
+            returnPath = path;
+            returnValue = json;
+            done();
+          },
+          jsonp: function (json) {
+            returnValue = json;
+            done();
+          }
         });
-      };
+      });
+    };
 
   describe('#create', function () {
     beforeEach(function () {
@@ -48,7 +48,7 @@ describe('the articles controller', function () {
 
     it('should create a new article', function (done) {
       subject(req, function () {
-        Article.findOne({title: 'New Article'}, function(err, article) {
+        Article.findOne({title: 'New Article'}, function (err, article) {
           expect(err).toBeNull();
           expect(article.content).toEqual('blah blah');
           expect(article.tags).toEqual('cool new');
@@ -83,9 +83,7 @@ describe('the articles controller', function () {
       });
     });
 
-});
-
-
+  });
 
 
 });

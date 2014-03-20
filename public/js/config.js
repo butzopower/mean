@@ -2,7 +2,7 @@
 
 //Setting up route
 angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
+  function ($stateProvider, $urlRouterProvider) {
     // For unmatched routes:
     $urlRouterProvider.otherwise('/');
 
@@ -11,21 +11,21 @@ angular.module('mean').config(['$stateProvider', '$urlRouterProvider',
       .state('all articles', {
         url: '/articles',
         templateUrl: 'views/articles/list.html'
-    })
+      })
       .state('edit article', {
         url: '/articles/:articleId/edit',
         templateUrl: 'views/articles/edit.html'
-    })
+      })
       .state('home', {
         url: '/',
         templateUrl: 'views/index.html'
-    });
-}
+      });
+  }
 ]);
 
 //Setting HTML5 Location Mode
 angular.module('mean').config(['$locationProvider',
-  function($locationProvider) {
+  function ($locationProvider) {
     $locationProvider.hashPrefix('!');
-}
+  }
 ]);

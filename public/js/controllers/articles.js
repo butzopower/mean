@@ -1,69 +1,69 @@
 'use strict';
 
 angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Global', 'Articles', function ($scope, $stateParams, $location, Global, Articles) {
-    $scope.global = Global;
+  $scope.global = Global;
 
-    $scope.create = function() {
-        var article = new Articles({
-            title: this.title,
-            content: this.content,
-            tags: this.tags
-        });
-        article.$save(function(response) {
-          $scope.articles.unshift(response);
-          $scope.addTemplate = undefined;
-        });
-
-        this.title = '';
-        this.content = '';
-        this.tags = '';
-    };
-
-    $scope.remove = function(article) {
-        if (article) {
-            article.$remove();
-
-            for (var i in $scope.articles) {
-                if ($scope.articles[i] === article) {
-                    $scope.articles.splice(i, 1);
-                }
-            }
-        }
-    };
-
-    $scope.update = function() {
-        var article = $scope.article;
-        if (!article.updated) {
-            article.updated = [];
-        }
-        article.updated.push(new Date().getTime());
-
-        article.$update(function() {
-            $location.path('articles');
-        });
-    };
-
-    $scope.find = function() {
-        Articles.query(function(articles) {
-            $scope.articles = articles;
-        });
-    };
-
-    $scope.addArticle = function() {
-      $scope.addTemplate = 'views/articles/create.html';
-    };
-
-    $scope.addCancel = function() {
+  $scope.create = function () {
+    var article = new Articles({
+      title: this.title,
+      content: this.content,
+      tags: this.tags
+    });
+    article.$save(function (response) {
+      $scope.articles.unshift(response);
       $scope.addTemplate = undefined;
-    };
+    });
 
-    $scope.editArticle = function(article) {
-      $scope.article = article;
-      $scope.article.editTemplate = 'views/articles/edit.html';
-    };
+    this.title = '';
+    this.content = '';
+    this.tags = '';
+  };
 
-    $scope.editCancel = function() {
-      $scope.article.editTemplate = undefined;
-      $scope.article = undefined;
-    };
+  $scope.remove = function (article) {
+    if (article) {
+      article.$remove();
+
+      for (var i in $scope.articles) {
+        if ($scope.articles[i] === article) {
+          $scope.articles.splice(i, 1);
+        }
+      }
+    }
+  };
+
+  $scope.update = function () {
+    var article = $scope.article;
+    if (!article.updated) {
+      article.updated = [];
+    }
+    article.updated.push(new Date().getTime());
+
+    article.$update(function () {
+      $location.path('articles');
+    });
+  };
+
+  $scope.find = function () {
+    Articles.query(function (articles) {
+      $scope.articles = articles;
+    });
+  };
+
+  $scope.addArticle = function () {
+    $scope.addTemplate = 'views/articles/create.html';
+  };
+
+  $scope.addCancel = function () {
+    $scope.addTemplate = undefined;
+  };
+
+  $scope.editArticle = function (article) {
+    $scope.article = article;
+    $scope.article.editTemplate = 'views/articles/edit.html';
+  };
+
+  $scope.editCancel = function () {
+    $scope.article.editTemplate = undefined;
+    $scope.article = undefined;
+  };
 }]);
