@@ -111,7 +111,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test:server', 'This will run jasmine server specs', function () {
     var shell = require('shelljs');
-    shell.exec('JASMINE_CONFIG_PATH=test/server/support/jasmine.conf.json ./node_modules/jasmine/bin/jasmine.js');
+    return shell.exec('JASMINE_CONFIG_PATH=test/server/support/jasmine.conf.json ./node_modules/jasmine/bin/jasmine.js').code;
   });
 
   grunt.registerTask('e2e:server', ['env:test', 'nodemon:test']);
