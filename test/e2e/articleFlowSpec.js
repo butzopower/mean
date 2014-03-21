@@ -22,7 +22,7 @@ describe('Article flow', function () {
       page.clickOn('Submit');
 
       // Index Page
-      expect(page.text()).toContain('Title');
+      expect(page.text()).not.toContain('Title');
 
       expect(page.text()).toContain('My first article');
       expect(page.text()).toContain('Some content');
