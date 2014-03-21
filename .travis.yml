@@ -10,4 +10,4 @@ install:
 before_script:
   - grunt e2e:server &
 script:
-  - grunt test && grunt e2e:test
+  - grunt test:server && grunt karma:unit && grunt e2e:test
