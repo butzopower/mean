@@ -5,6 +5,8 @@ describe('the articles controller', function () {
     articlesController = require('../../../app/controllers/articles'),
     returnValue,
     returnCode,
+    User,
+    Article,
     subject = function (req, done) {
       User.create({
         name: 'John Doe',
@@ -23,6 +25,11 @@ describe('the articles controller', function () {
         });
       });
     };
+
+  beforeEach(function () {
+    User = this.requireModel('user');
+    Article = this.requireModel('article');
+  });
 
   describe('#create', function () {
     beforeEach(function () {

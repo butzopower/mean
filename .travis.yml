@@ -8,6 +8,6 @@ services:
 install:
   - npm install
 before_script:
-  - grunt e2e:server &
+  - grunt nodemon:e2e &
 script:
-  - grunt test:server && grunt karma:unit && grunt e2e:test
+  - grunt test

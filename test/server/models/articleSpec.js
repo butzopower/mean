@@ -1,9 +1,14 @@
 'use strict';
 
 describe('Article', function () {
-  var user, article;
+  var User, Article, Tag, user, article, _;
 
   beforeEach(function (done) {
+    _ = require('lodash');
+    User = this.requireModel('user');
+    Article = this.requireModel('article');
+    Tag = this.requireModel('tag');
+
     user = new User({
       name: 'Full name',
       email: 'test@test.com',
@@ -48,8 +53,8 @@ describe('Article', function () {
     });
   });
 
-  describe("#tags", function () {
-    it("updates the current array of tags on the article", function (done) {
+  describe('#tags', function () {
+    it('uxpdates the current array of tags on the article', function (done) {
       article.save(function (err) {
         expect(err).toBeNull();
 
@@ -61,13 +66,13 @@ describe('Article', function () {
       });
     });
 
-    describe("when one of the provided tags does not currently exist on the article", function () {
-      describe("and it already exists in the Tag Collection", function () {
-        it("doesnt add a new tag to the tag collection", function (done) {
-          Tag.create({name: 'some'}, function (err, tag) {
+    describe('when one of the provided tags does not currently exist on the article', function () {
+      describe('and it already exists in the Tag Collection', function () {
+        xit('doesnt add a new tag to the tag collection', function (done) {
+          Tag.create({name: 'some'}, function (err) {
             expect(err).toBeNull();
 
-            article.save(function (err, article) {
+            article.save(function (err) {
               expect(err).toBeNull();
 
               Tag.find({}, function (err, tags) {
@@ -77,13 +82,12 @@ describe('Article', function () {
                 done();
               });
             });
-          })
-
+          });
         });
       });
 
-      describe("and it does not already exist in the tag collection", function () {
-        it("adds the tag to the Tag collection", function (done) {
+      describe('and it does not already exist in the tag collection', function () {
+        xit('adds the tag to the Tag collection', function (done) {
           article.save(function (err, article) {
             expect(err).toBeNull();
 
@@ -100,15 +104,15 @@ describe('Article', function () {
     });
 
 
-    describe("when one of the tags that is currently on the article has been removed", function () {
-      describe("and this article is the only current user of that tag", function () {
-        it("removes the tag from the tag collection", function () {
+    describe('when one of the tags that is currently on the article has been removed', function () {
+      describe('and this article is the only current user of that tag', function () {
+        it('removes the tag from the tag collection', function () {
 
         });
       });
 
-      describe("and there is at least one other article with this tag", function () {
-        it("does not remove the tag from the Tag collection", function () {
+      describe('and there is at least one other article with this tag', function () {
+        it('does not remove the tag from the Tag collection', function () {
 
         });
       });

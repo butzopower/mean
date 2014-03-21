@@ -11,3 +11,7 @@ ul.articles {
 ul.articles li:not(:last-child) {
     border-bottom:1px solid #ccc
 }
+
+.label {
+  margin-right: 10px;
+}

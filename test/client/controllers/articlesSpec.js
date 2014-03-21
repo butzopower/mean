@@ -43,7 +43,7 @@ describe('ArticlesController', function () {
 
   }));
 
-  describe("#find", function () {
+  describe('#find', function () {
     it('$scope.find() should create an array with at least one article object ' +
       'fetched from XHR', function () {
 
@@ -69,61 +69,61 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#create", function () {
+  describe('#create', function () {
     beforeEach(function () {
       scope.title = 'An Article about MEAN';
       scope.content = 'MEAN rocks!';
-      scope.tags = 'first, second, third';
+      scope.tags = ['first', 'second', 'third'];
       scope.addTemplate = 'views/articles/create.html';
       scope.articles = [
         {title: 'Old Article'}
       ];
     });
 
-    describe("when succesful", function () {
+    describe('when succesful', function () {
       beforeEach(function () {
         $httpBackend.when('POST', 'articles').respond({
           _id: '525cf20451979dea2c000001',
           title: 'An Article about MEAN',
           content: 'MEAN rocks!',
-          tags: 'first, second, third'
+          tags: ['first', 'second', 'third']
         });
       });
 
-      it("makes the correct request", function () {
+      it('makes the correct request', function () {
         $httpBackend.expectPOST('articles', {
           title: 'An Article about MEAN',
           content: 'MEAN rocks!',
-          tags: 'first, second, third'
+          tags: ['first', 'second', 'third']
         });
         scope.create();
         $httpBackend.flush();
       });
 
-      it("resets the form", function () {
+      it('resets the form', function () {
         scope.create();
         $httpBackend.flush();
         expect(scope.title).toEqual('');
         expect(scope.content).toEqual('');
-        expect(scope.tags).toEqual('');
+        expect(scope.tags).toEqual([]);
         expect(scope.addTemplate).toBeUndefined();
       });
 
-      it("updates the scope's articles", function () {
+      it('updates the scope\'s articles', function () {
         scope.create();
         $httpBackend.flush();
         expect(scope.articles[0].title).toEqual('An Article about MEAN');
       });
     });
 
-    describe("when the save fails", function () {
+    describe('when the save fails', function () {
       beforeEach(function () {
         $httpBackend.when('POST', 'articles').respond(422, {
           errors: {title: {message: 'cannot be Blank', path: 'title'}}
         });
       });
 
-      it("should show an alert message with the error", function () {
+      it('should show an alert message with the error', function () {
         scope.create();
         $httpBackend.flush();
         expect(scope.alerts).toEqual([{
@@ -134,7 +134,7 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#update", function () {
+  describe('#update', function () {
     it('$scope.update() should update a valid article', inject(function (Articles) {
 
       // fixture rideshare
@@ -172,7 +172,7 @@ describe('ArticlesController', function () {
     }));
   });
 
-  describe("#remove", function () {
+  describe('#remove', function () {
     it('$scope.remove() should send a DELETE request with a valid articleId' +
       'and remove the article from the scope', inject(function (Articles) {
 
@@ -199,7 +199,7 @@ describe('ArticlesController', function () {
     }));
   });
 
-  describe("#addArticle", function () {
+  describe('#addArticle', function () {
     it('$scope.addArticle() should define the addTemplate', function () {
       expect(scope.addTemplate).toBeUndefined();
       scope.addArticle();
@@ -207,7 +207,7 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#addCancel", function () {
+  describe('#addCancel', function () {
     it('$scope.addCancel() should undefine the addTemplate', function () {
       scope.addTemplate = 'foobar';
       scope.addCancel();
@@ -215,7 +215,7 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#editArticle", function () {
+  describe('#editArticle', function () {
     it('$scope.editArticle() should define the addTemplate', function () {
       expect(scope.editTemplate).toBeUndefined();
       scope.editArticle({});
@@ -223,7 +223,7 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#editCancel", function () {
+  describe('#editCancel', function () {
     it('$scope.editCancel() should undefine the addTemplate', function () {
       scope.article = {editTemplate: 'foobar'};
       scope.editCancel();
@@ -231,8 +231,8 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#sortTitle", function () {
-    it("cycles through all the sort options", function () {
+  describe('#sortTitle', function () {
+    it('cycles through all the sort options', function () {
       expect(scope.sortPredicate).toEqual('');
       expect(scope.sortTitleName).toEqual('Title');
 
@@ -252,7 +252,7 @@ describe('ArticlesController', function () {
       expect(scope.sortTitleName).toEqual('Title');
     });
 
-    it("unsets any other sort", function () {
+    it('unsets any other sort', function () {
       scope.sortDateName = 'foo';
 
       scope.sortTitle();
@@ -260,7 +260,7 @@ describe('ArticlesController', function () {
       expect(scope.sortDateName).toEqual('Date');
     });
 
-    it("come from another sorted predicate", function () {
+    it('come from another sorted predicate', function () {
       scope.sortPredicate = '+created';
 
       scope.sortTitle();
@@ -269,8 +269,8 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#sortDate", function () {
-    it("cycles through the sort options", function () {
+  describe('#sortDate', function () {
+    it('cycles through the sort options', function () {
       expect(scope.sortPredicate).toEqual('');
       expect(scope.sortDateName).toEqual('Date');
 
@@ -290,7 +290,7 @@ describe('ArticlesController', function () {
       expect(scope.sortDateName).toEqual('Date');
     });
 
-    it("unsets any other sort", function () {
+    it('unsets any other sort', function () {
       scope.sortTitleName = 'foo';
 
       scope.sortDate();
@@ -298,7 +298,7 @@ describe('ArticlesController', function () {
       expect(scope.sortTitleName).toEqual('Title');
     });
 
-    it("come from another sorted predicate", function () {
+    it('come from another sorted predicate', function () {
       scope.sortPredicate = '+title';
 
       scope.sortDate();
@@ -307,8 +307,8 @@ describe('ArticlesController', function () {
     });
   });
 
-  describe("#closeAlert", function () {
-    it("removes the alert from the list of alerts", function () {
+  describe('#closeAlert', function () {
+    it('removes the alert from the list of alerts', function () {
       scope.alerts.push({type: 'danger', msg: 'Some Alert'});
       scope.closeAlert(0);
       expect(scope.alerts.length).toEqual(0);

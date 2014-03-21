@@ -1,9 +1,11 @@
 'use strict';
 
 describe('Model User:', function () {
-  var user, user2;
+  var User, user, user2;
 
   beforeEach(function (done) {
+    User = this.requireModel('user');
+
     var userParams = {
       name: 'Full name',
       email: 'test@test.com',

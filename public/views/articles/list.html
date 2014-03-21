@@ -22,7 +22,7 @@
 			<span>{{article.created | date:'medium'}}</span> /
 			<span>{{article.user.name}}</span>
 			<h2>{{article.title}}</h2>
-			<div>{{article.tags}}</div>
+			<div><span class="label label-primary" data-ng-repeat="tag in article.tags">{{tag}}</span></div>
 			<div>{{article.content}}</div>
 			<div data-ng-show="global.user._id == article.user._id">
 				<a class="btn edit" data-ng-click="editArticle(article)">

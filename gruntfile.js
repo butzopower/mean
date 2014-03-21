@@ -47,28 +47,28 @@ module.exports = function (grunt) {
           cwd: __dirname
         }
       },
-      test: {
+      e2e: {
         script: 'server.js',
         options: {
           ignore: ['public/**'],
           ext: 'js',
           env: {
-            PORT: 8000
+            PORT: 8000,
+            NODE_ENV: 'test'
           },
           cwd: __dirname
         }
       }
     },
     concurrent: {
-      tasks: ['nodemon:dev', 'e2e:server', 'watch'],
+      tasks: ['nodemon:dev', 'nodemon:e2e', 'watch'],
       options: {
         logConcurrentOutput: true
       }
     },
     env: {
       test: {
-        NODE_ENV: 'test',
-        PORT: 6000
+        NODE_ENV: 'test'
       }
     },
     karma: {
@@ -100,29 +100,23 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-protractor-runner');
 
-  //Making grunt default to force in order not to break the project.
-  grunt.option('force', true);
-
   //Default task(s).
-  grunt.registerTask('default', ['jshint', 'concurrent']);
+  grunt.registerTask('default', 'concurrent');
 
   //Test task.
-  grunt.registerTask('test', ['env:test', 'db:drop', 'test:server', 'karma:unit']);
+  grunt.registerTask('test', 'Run client, server and e2e tests, with JSHint', ['jshint', 'test:server', 'test:client', 'test:e2e']);
 
-  grunt.registerTask('test:server', 'This will run jasmine server specs', function () {
+  grunt.registerTask('test:client', 'Run client tests', ['env:test', 'karma:unit']);
+  grunt.registerTask('test:e2e', 'Run e2e tests', ['env:test', 'db:drop', 'db:seed', 'protractor']);
+  grunt.registerTask('test:server', 'Run server tests', ['env:test', 'db:drop', 'test:server:shell']);
+
+  grunt.registerTask('test:server:shell', 'Run `test:server` instead.', function () {
     var shell = require('shelljs');
-    var done = this.async();
-
-    shell.exec('JASMINE_CONFIG_PATH=test/server/support/jasmine.conf.json ./node_modules/jasmine/bin/jasmine.js', function (code) {
-      var error = code > 0 ? new Error("Specs have failed.") : null;
-      done(error);
-    });
+    var code = shell.exec('JASMINE_CONFIG_PATH=test/server/support/jasmine.conf.json ./node_modules/jasmine/bin/jasmine.js');
+    return code > 0 ? new Error('Specs have failed.') : null;
   });
 
-  grunt.registerTask('e2e:server', ['env:test', 'nodemon:test']);
-
-  grunt.registerTask('e2e:test', ['env:test', 'db:drop', 'db:seed', 'protractor']);
-
+  // DB Tasks
   grunt.registerTask('db:drop', 'Drop the DB', function () {
     var config = require('./config/config');
     var mongoose = require('mongoose');

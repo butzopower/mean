@@ -8,7 +8,7 @@ describe('Login flow', function () {
     it('can signup', function () {
       user.signup();
 
-      expect(page.text()).toContain('home view');
+      expect(page.text()).toContain('Mike Dylan');
     });
   });
 });

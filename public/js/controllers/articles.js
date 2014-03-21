@@ -18,7 +18,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
       $scope.articles.unshift(response);
       $scope.addTemplate = undefined;
     }, function (httpResponse) {
-      var msg = "";
+      var msg = '';
       angular.forEach(httpResponse.data.errors, function(error) {
         error.path = error.path.charAt(0).toUpperCase() + error.path.slice(1);
         msg += error.path + ': ' + error.message;
@@ -32,7 +32,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
 
     this.title = '';
     this.content = '';
-    this.tags = '';
+    this.tags = [];
   };
 
   $scope.remove = function (article) {
@@ -85,29 +85,29 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
 
   $scope.sortTitle = function () {
     $scope.sortDateName = 'Date';
-    if ($scope.sortPredicate == '' || $scope.sortPredicate.indexOf('created') > 0) {
-      $scope.sortPredicate = "+title";
-      $scope.sortTitleName = "Title V";
-    } else if ($scope.sortPredicate == "+title") {
-      $scope.sortPredicate = "-title";
-      $scope.sortTitleName = "Title ^";
+    if ($scope.sortPredicate === '' || $scope.sortPredicate.indexOf('created') > 0) {
+      $scope.sortPredicate = '+title';
+      $scope.sortTitleName = 'Title V';
+    } else if ($scope.sortPredicate === '+title') {
+      $scope.sortPredicate = '-title';
+      $scope.sortTitleName = 'Title ^';
     } else {
       $scope.sortPredicate = '';
-      $scope.sortTitleName = "Title";
+      $scope.sortTitleName = 'Title';
     }
   };
 
   $scope.sortDate = function () {
     $scope.sortTitleName = 'Title';
-    if ($scope.sortPredicate == '' || $scope.sortPredicate.indexOf('title') > 0) {
-      $scope.sortPredicate = "+created";
-      $scope.sortDateName = "Date V";
-    } else if ($scope.sortPredicate == "+created") {
-      $scope.sortPredicate = "-created";
-      $scope.sortDateName = "Date ^";
+    if ($scope.sortPredicate === '' || $scope.sortPredicate.indexOf('title') > 0) {
+      $scope.sortPredicate = '+created';
+      $scope.sortDateName = 'Date V';
+    } else if ($scope.sortPredicate === '+created') {
+      $scope.sortPredicate = '-created';
+      $scope.sortDateName = 'Date ^';
     } else {
       $scope.sortPredicate = '';
-      $scope.sortDateName = "Date";
+      $scope.sortDateName = 'Date';
     }
   };
 

@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-  Tag = mongoose.model('Tag'),
+  // Tag = mongoose.model('Tag'),
   Schema = mongoose.Schema;
 
 
@@ -30,20 +30,18 @@ var ArticleSchema = new Schema({
     type: [String],
     default: [],
     set: function (tags) {
-      var articleId = this._id;
+      // var articleId = this._id;
 
-      tags.forEach(function (tagName, index) {
-        Tag.findOne({name: tagName}, function (err, tag) {
-          if (tag) {
-            // tag.articleIds.$push(article_id);
-            // tag.save();
-          } else {
-            Tag.create({name: tagName, articleIds: [articleId]});
-          }
-        });
-
-
-      });
+      // tags.forEach(function (tagName, index) {
+      //   Tag.findOne({name: tagName}, function (err, tag) {
+      //     if (tag) {
+      //       // tag.articleIds.$push(article_id);
+      //       // tag.save();
+      //     } else {
+      //       Tag.create({name: tagName, articleIds: [articleId]});
+      //     }
+      //   });
+      // });
 
       return tags;
     }
