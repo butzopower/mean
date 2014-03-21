@@ -125,11 +125,8 @@ heroku apps:create
 git push heroku master
 ```
 
-## More Information
-  * Visit us at [Linnovate.net](http://www.linnovate.net/).
-  * Visit our [Ninja's Zone](http://www.meanleanstartupmachine.com/) for extended support.
-
 ## Credits
+* Forked off of https://linnovate/mean
 * Inspired by the great work of [Madhusudhan Srinivasa](https://github.com/madhums/)
 * The MEAN name was coined by [Valeri Karpov](http://blog.mongodb.org/post/49262866911/the-mean-stack-mongodb-expressjs-angularjs-and)
 * MEAN could not be as great as it is without the contribution of the [following people](https://github.com/linnovate/mean/blob/master/AUTHORS).
