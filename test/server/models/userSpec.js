@@ -1,10 +1,7 @@
 'use strict';
 
 describe('Model User:', function () {
-  var mongoose = require('mongoose'),
-    User = mongoose.model('User'),
-    user,
-    user2;
+  var user, user2;
 
   beforeEach(function (done) {
     var userParams = {
@@ -17,12 +14,6 @@ describe('Model User:', function () {
     user = new User(userParams);
     user2 = new User(userParams);
 
-    done();
-  });
-
-  afterEach(function (done) {
-    user.remove();
-    user2.remove();
     done();
   });
 

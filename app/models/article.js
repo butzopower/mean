@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+  Tag = mongoose.model('Tag'),
   Schema = mongoose.Schema;
 
 
@@ -26,9 +27,26 @@ var ArticleSchema = new Schema({
     trim: true
   },
   tags: {
-    type: String,
-    default: '',
-    trim: true
+    type: [String],
+    default: [],
+    set: function (tags) {
+      var articleId = this._id;
+
+      tags.forEach(function (tagName, index) {
+        Tag.findOne({name: tagName}, function (err, tag) {
+          if (tag) {
+            // tag.articleIds.$push(article_id);
+            // tag.save();
+          } else {
+            Tag.create({name: tagName, articleIds: [articleId]});
+          }
+        });
+
+
+      });
+
+      return tags;
+    }
   },
   user: {
     type: Schema.ObjectId,
@@ -42,6 +60,34 @@ var ArticleSchema = new Schema({
 ArticleSchema.path('title').validate(function (title) {
   return title.length;
 }, 'cannot be blank');
+
+// ArticleSchema.virtual('tags')
+  // .set(function (tags) {
+    // var article_id = this.id;
+    // tags = tags.split(',');
+//
+//     (this.tags - tags).each(function (tag) {
+//       Tag.find({name: name}, function (err, tag) {
+//         tag.article_ids.slice(tag.article_ids.indexOf(article_id), 1)
+//         if (tag.article_id.length == 0) {
+//           tag.remove();
+//         }
+//       });
+//     });
+//
+//     (tags - this.tags).each(function (tag) {
+//       Tag.find({name: tag}, function (err, tag) {
+//         if (!tag) {
+//           Tag.create({name: tag, article_ids: [article_id]});
+//         } else {
+//           tag.article_ids.push(article_id);
+//           tag.save();
+//         }
+//       });
+//     });
+//
+  //   this.tagArray = tags;
+
 
 /**
  * Statics

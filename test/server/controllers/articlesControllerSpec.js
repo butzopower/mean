@@ -2,9 +2,6 @@
 
 describe('the articles controller', function () {
   var req = {body: {}, user: {}},
-    mongoose = require('mongoose'),
-    User = mongoose.model('User'),
-    Article = mongoose.model('Article'),
     articlesController = require('../../../app/controllers/articles'),
     returnValue,
     returnCode,
@@ -31,23 +28,18 @@ describe('the articles controller', function () {
     beforeEach(function () {
       req.body = {
         title: 'New Article',
-        tags: 'cool new',
+        tags: ['cool new'],
         content: 'blah blah'
       };
     });
 
-    afterEach(function (done) {
-      Article.remove({}, function () {
-        User.remove({}, done);
-      });
-    });
 
     it('should create a new article', function (done) {
       subject(req, function () {
         Article.findOne({title: 'New Article'}, function (err, article) {
           expect(err).toBeNull();
           expect(article.content).toEqual('blah blah');
-          expect(article.tags).toEqual('cool new');
+          expect(article.tags).toEqual(['cool new']);
           expect(article.user.id).toEqual(req.user._id.id);
 
           done();
@@ -55,11 +47,10 @@ describe('the articles controller', function () {
       });
     });
 
-
     it('should return a hash of article attributes with the user data', function (done) {
       subject(req, function () {
         expect(returnValue.title).toEqual('New Article');
-        expect(returnValue.tags).toEqual('cool new');
+        expect(returnValue.tags).toEqual(['cool new']);
         expect(returnValue.content).toEqual('blah blah');
         expect(returnValue.user).toEqual({name: 'John Doe', username: 'jdoe', _id: req.user.id});
 

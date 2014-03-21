@@ -17,7 +17,7 @@ var express = require('express'),
 // Set the node environment variable if not set before
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Initializing system variables 
+// Initializing system variables
 var config = require('./config/config'),
   mongoose = require('mongoose');
 
@@ -25,21 +25,9 @@ var config = require('./config/config'),
 var db = mongoose.connect(config.db);
 
 // Bootstrap models
-var models_path = __dirname + '/app/models';
-var walk = function (path) {
-  fs.readdirSync(path).forEach(function (file) {
-    var newPath = path + '/' + file;
-    var stat = fs.statSync(newPath);
-    if (stat.isFile()) {
-      if (/(.*)\.(js$|coffee$)/.test(file)) {
-        require(newPath);
-      }
-    } else if (stat.isDirectory()) {
-      walk(newPath);
-    }
-  });
-};
-walk(models_path);
+require(__dirname + '/app/models/tag');
+require(__dirname + '/app/models/article');
+require(__dirname + '/app/models/user');
 
 // Bootstrap passport config
 require('./config/passport')(passport);

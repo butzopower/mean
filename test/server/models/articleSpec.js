@@ -1,12 +1,7 @@
 'use strict';
 
-describe('Model Article:', function () {
-  var mongoose = require('mongoose'),
-    User = mongoose.model('User'),
-    Article = mongoose.model('Article');
-
-  var user;
-  var article;
+describe('Article', function () {
+  var user, article;
 
   beforeEach(function (done) {
     user = new User({
@@ -20,7 +15,7 @@ describe('Model Article:', function () {
       article = new Article({
         title: 'Article Title',
         content: 'Article Content',
-        tags: 'some, set, of, tags',
+        tags: ['some', 'set', 'of', 'tags'],
         user: user
       });
 
@@ -28,7 +23,7 @@ describe('Model Article:', function () {
     });
   });
 
-  describe('Method Save', function () {
+  describe('#save', function () {
     it('should be able to save without problems', function (done) {
       article.save(function (err) {
         expect(err).toBeNull();
@@ -36,7 +31,6 @@ describe('Model Article:', function () {
         Article.find({ 'title': 'Article Title' }, function (err, articles) {
           expect(articles[0].title).toEqual('Article Title');
           expect(articles[0].content).toEqual('Article Content');
-          expect(articles[0].tags).toEqual('some, set, of, tags');
 
           done();
         });
@@ -54,9 +48,70 @@ describe('Model Article:', function () {
     });
   });
 
-  afterEach(function (done) {
-    article.remove();
-    user.remove();
-    done();
+  describe("#tags", function () {
+    it("updates the current array of tags on the article", function (done) {
+      article.save(function (err) {
+        expect(err).toBeNull();
+
+        Article.find({ 'title': 'Article Title' }, function (err, articles) {
+          expect(articles[0].tags).toEqual(['some', 'set', 'of', 'tags']);
+
+          done();
+        });
+      });
+    });
+
+    describe("when one of the provided tags does not currently exist on the article", function () {
+      describe("and it already exists in the Tag Collection", function () {
+        it("doesnt add a new tag to the tag collection", function (done) {
+          Tag.create({name: 'some'}, function (err, tag) {
+            expect(err).toBeNull();
+
+            article.save(function (err, article) {
+              expect(err).toBeNull();
+
+              Tag.find({}, function (err, tags) {
+                expect(tags.length).toEqual(4);
+                expect(_(tags).pluck('name').value()).toEqual(['some', 'set', 'of', 'tags']);
+
+                done();
+              });
+            });
+          })
+
+        });
+      });
+
+      describe("and it does not already exist in the tag collection", function () {
+        it("adds the tag to the Tag collection", function (done) {
+          article.save(function (err, article) {
+            expect(err).toBeNull();
+
+            Tag.find({}, function (err, tags) {
+              expect(tags.length).toEqual(4);
+              expect(_(tags).pluck('name').value()).toEqual(['some', 'set', 'of', 'tags']);
+              expect(_(tags).pluck('articleIds').flatten().uniq().value()).toEqual([article.id]);
+
+              done();
+            });
+          });
+        });
+      });
+    });
+
+
+    describe("when one of the tags that is currently on the article has been removed", function () {
+      describe("and this article is the only current user of that tag", function () {
+        it("removes the tag from the tag collection", function () {
+
+        });
+      });
+
+      describe("and there is at least one other article with this tag", function () {
+        it("does not remove the tag from the Tag collection", function () {
+
+        });
+      });
+    });
   });
 });
