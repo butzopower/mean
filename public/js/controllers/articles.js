@@ -3,6 +3,10 @@
 angular.module('mean.articles').controller('ArticlesController', ['$scope', '$stateParams', '$location', 'Global', 'Articles', function ($scope, $stateParams, $location, Global, Articles) {
   $scope.global = Global;
 
+  $scope.sortTitleName = 'Title';
+  $scope.sortDateName = 'Date';
+  $scope.sortPredicate = '';
+
   $scope.create = function () {
     var article = new Articles({
       title: this.title,
@@ -65,5 +69,33 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
   $scope.editCancel = function () {
     $scope.article.editTemplate = undefined;
     $scope.article = undefined;
+  };
+
+  $scope.sortTitle = function () {
+    $scope.sortDateName = 'Date';
+    if ($scope.sortPredicate == '' || $scope.sortPredicate.indexOf('created') > 0) {
+      $scope.sortPredicate = "+title";
+      $scope.sortTitleName = "Title V";
+    } else if ($scope.sortPredicate == "+title") {
+      $scope.sortPredicate = "-title";
+      $scope.sortTitleName = "Title ^";
+    } else {
+      $scope.sortPredicate = '';
+      $scope.sortTitleName = "Title";
+    }
+  };
+
+  $scope.sortDate = function () {
+    $scope.sortTitleName = 'Title';
+    if ($scope.sortPredicate == '' || $scope.sortPredicate.indexOf('title') > 0) {
+      $scope.sortPredicate = "+created";
+      $scope.sortDateName = "Date V";
+    } else if ($scope.sortPredicate == "+created") {
+      $scope.sortPredicate = "-created";
+      $scope.sortDateName = "Date ^";
+    } else {
+      $scope.sortPredicate = '';
+      $scope.sortDateName = "Date";
+    }
   };
 }]);

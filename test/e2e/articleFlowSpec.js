@@ -14,7 +14,7 @@ describe('Article flow', function () {
 
       page.clickOn('Add');
 
-      expect(page.text()).toContain('Title');
+      expect(page.text()).toContain('Tags');
 
       page.fillIn('Title', 'My first article');
       page.fillIn('Content', 'Some content');
@@ -22,7 +22,7 @@ describe('Article flow', function () {
       page.clickOn('Submit');
 
       // Index Page
-      expect(page.text()).not.toContain('Title');
+      expect(page.text()).not.toContain('Tags');
 
       expect(page.text()).toContain('My first article');
       expect(page.text()).toContain('Some content');
@@ -35,7 +35,7 @@ describe('Article flow', function () {
 
       page.fillIn('Content', 'My updated content');
       page.clickOn('Submit');
-      expect(page.text()).not.toContain('Title');
+      expect(page.text()).not.toContain('Tags');
       expect(page.text()).toContain('My updated content');
 
       // Delete

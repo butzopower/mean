@@ -43,161 +43,251 @@ describe('ArticlesController', function () {
 
   }));
 
-  it('$scope.find() should create an array with at least one article object ' +
-    'fetched from XHR', function () {
+  describe("#find", function () {
+    it('$scope.find() should create an array with at least one article object ' +
+      'fetched from XHR', function () {
 
-    // test expected GET request
-    $httpBackend.expectGET('articles').respond([
-      {
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!'
-      }
-    ]);
+      // test expected GET request
+      $httpBackend.expectGET('articles').respond([
+        {
+          title: 'An Article about MEAN',
+          content: 'MEAN rocks!'
+        }
+      ]);
 
-    // run controller
-    scope.find();
-    $httpBackend.flush();
+      // run controller
+      scope.find();
+      $httpBackend.flush();
 
-    // test scope value
-    expect(scope.articles).toEqualData([
-      {
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!'
-      }
-    ]);
-
+      // test scope value
+      expect(scope.articles).toEqualData([
+        {
+          title: 'An Article about MEAN',
+          content: 'MEAN rocks!'
+        }
+      ]);
+    });
   });
 
-  it('$scope.create() with valid form data should send a POST request ' +
-    'with the form input values and then ' +
-    'locate to new object URL', function () {
+  describe("#create", function () {
+    it('$scope.create() with valid form data should send a POST request ' +
+      'with the form input values and then ' +
+      'locate to new object URL', function () {
 
-    // fixture expected POST data
-    var postArticleData = function () {
-      return {
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!',
-        tags: 'first, second, third'
+      // fixture expected POST data
+      var postArticleData = function () {
+        return {
+          title: 'An Article about MEAN',
+          content: 'MEAN rocks!',
+          tags: 'first, second, third'
+        };
       };
-    };
 
-    // fixture expected response data
-    var responseArticleData = function () {
-      return {
-        _id: '525cf20451979dea2c000001',
-        title: 'An Article about MEAN',
-        content: 'MEAN rocks!',
-        tags: 'first, second, third'
+      // fixture expected response data
+      var responseArticleData = function () {
+        return {
+          _id: '525cf20451979dea2c000001',
+          title: 'An Article about MEAN',
+          content: 'MEAN rocks!',
+          tags: 'first, second, third'
+        };
       };
-    };
 
-    // fixture mock form input values
-    scope.title = 'An Article about MEAN';
-    scope.content = 'MEAN rocks!';
-    scope.tags = 'first, second, third';
-    scope.addTemplate = 'views/articles/create.html';
-    scope.articles = [
-      {title: 'Old Article'}
-    ];
+      // fixture mock form input values
+      scope.title = 'An Article about MEAN';
+      scope.content = 'MEAN rocks!';
+      scope.tags = 'first, second, third';
+      scope.addTemplate = 'views/articles/create.html';
+      scope.articles = [
+        {title: 'Old Article'}
+      ];
 
-    // test post request is sent
-    $httpBackend.expectPOST('articles', postArticleData()).respond(responseArticleData());
+      // test post request is sent
+      $httpBackend.expectPOST('articles', postArticleData()).respond(responseArticleData());
 
-    // Run controller
-    scope.create();
-    $httpBackend.flush();
+      // Run controller
+      scope.create();
+      $httpBackend.flush();
 
-    // test form input(s) are reset
-    expect(scope.title).toEqual('');
-    expect(scope.content).toEqual('');
-    expect(scope.tags).toEqual('');
-    expect(scope.addTemplate).toBeUndefined();
-    expect(scope.articles[0].title).toEqual('An Article about MEAN');
+      // test form input(s) are reset
+      expect(scope.title).toEqual('');
+      expect(scope.content).toEqual('');
+      expect(scope.tags).toEqual('');
+      expect(scope.addTemplate).toBeUndefined();
+      expect(scope.articles[0].title).toEqual('An Article about MEAN');
+    });
   });
 
-  it('$scope.update() should update a valid article', inject(function (Articles) {
+  describe("#update", function () {
+    it('$scope.update() should update a valid article', inject(function (Articles) {
 
-    // fixture rideshare
-    var putArticleData = function () {
-      return {
-        _id: '525a8422f6d0f87f0e407a33',
-        title: 'An Article about MEAN',
-        to: 'MEAN is great!'
+      // fixture rideshare
+      var putArticleData = function () {
+        return {
+          _id: '525a8422f6d0f87f0e407a33',
+          title: 'An Article about MEAN',
+          to: 'MEAN is great!'
+        };
       };
-    };
 
-    // mock article object from form
-    var article = new Articles(putArticleData());
+      // mock article object from form
+      var article = new Articles(putArticleData());
 
-    // mock article in scope
-    scope.article = article;
+      // mock article in scope
+      scope.article = article;
 
-    // test PUT happens correctly
-    $httpBackend.expectPUT(/articles\/([0-9a-fA-F]{24})$/).respond();
+      // test PUT happens correctly
+      $httpBackend.expectPUT(/articles\/([0-9a-fA-F]{24})$/).respond();
 
-    // testing the body data is out for now until an idea for testing the dynamic updated array value is figured out
-    //$httpBackend.expectPUT(/articles\/([0-9a-fA-F]{24})$/, putArticleData()).respond();
-    /*
-     Error: Expected PUT /articles\/([0-9a-fA-F]{24})$/ with different data
-     EXPECTED: {'_id':'525a8422f6d0f87f0e407a33','title':'An Article about MEAN','to':'MEAN is great!'}
-     GOT:      {'_id':'525a8422f6d0f87f0e407a33','title':'An Article about MEAN','to':'MEAN is great!','updated':[1383534772975]}
-     */
+      // testing the body data is out for now until an idea for testing the dynamic updated array value is figured out
+      //$httpBackend.expectPUT(/articles\/([0-9a-fA-F]{24})$/, putArticleData()).respond();
+      /*
+       Error: Expected PUT /articles\/([0-9a-fA-F]{24})$/ with different data
+       EXPECTED: {'_id':'525a8422f6d0f87f0e407a33','title':'An Article about MEAN','to':'MEAN is great!'}
+       GOT:      {'_id':'525a8422f6d0f87f0e407a33','title':'An Article about MEAN','to':'MEAN is great!','updated':[1383534772975]}
+       */
 
-    // run controller
-    scope.update();
-    $httpBackend.flush();
+      // run controller
+      scope.update();
+      $httpBackend.flush();
 
-    // test URL location to new object
-    expect($location.path()).toBe('/articles');
+      // test URL location to new object
+      expect($location.path()).toBe('/articles');
+    }));
+  });
 
-  }));
+  describe("#remove", function () {
+    it('$scope.remove() should send a DELETE request with a valid articleId' +
+      'and remove the article from the scope', inject(function (Articles) {
 
-  it('$scope.remove() should send a DELETE request with a valid articleId' +
-    'and remove the article from the scope', inject(function (Articles) {
+      // fixture rideshare
+      var article = new Articles({
+        _id: '525a8422f6d0f87f0e407a33'
+      });
 
-    // fixture rideshare
-    var article = new Articles({
-      _id: '525a8422f6d0f87f0e407a33'
+      // mock rideshares in scope
+      scope.articles = [];
+      scope.articles.push(article);
+
+      // test expected rideshare DELETE request
+      $httpBackend.expectDELETE(/articles\/([0-9a-fA-F]{24})$/).respond(204);
+
+      // run controller
+      scope.remove(article);
+      $httpBackend.flush();
+
+      // test after successful delete URL location articles lis
+      //expect($location.path()).toBe('/articles');
+      expect(scope.articles.length).toBe(0);
+
+    }));
+  });
+
+  describe("#addArticle", function () {
+    it('$scope.addArticle() should define the addTemplate', function () {
+      expect(scope.addTemplate).toBeUndefined();
+      scope.addArticle();
+      expect(scope.addTemplate).toBe('views/articles/create.html');
+    });
+  });
+
+  describe("#addCancel", function () {
+    it('$scope.addCancel() should undefine the addTemplate', function () {
+      scope.addTemplate = 'foobar';
+      scope.addCancel();
+      expect(scope.addTemplate).not.toBeDefined();
+    });
+  });
+
+  describe("#editArticle", function () {
+    it('$scope.editArticle() should define the addTemplate', function () {
+      expect(scope.editTemplate).toBeUndefined();
+      scope.editArticle({});
+      expect(scope.article.editTemplate).toBe('views/articles/edit.html');
+    });
+  });
+
+  describe("#editCancel", function () {
+    it('$scope.editCancel() should undefine the addTemplate', function () {
+      scope.article = {editTemplate: 'foobar'};
+      scope.editCancel();
+      expect(scope.article).not.toBeDefined();
+    });
+  });
+
+  describe("#sortTitle", function () {
+    it("cycles through all the sort options", function () {
+      expect(scope.sortPredicate).toEqual('');
+      expect(scope.sortTitleName).toEqual('Title');
+
+      scope.sortTitle();
+
+      expect(scope.sortPredicate).toEqual('+title');
+      expect(scope.sortTitleName).toEqual('Title V');
+
+      scope.sortTitle();
+
+      expect(scope.sortPredicate).toEqual('-title');
+      expect(scope.sortTitleName).toEqual('Title ^');
+
+      scope.sortTitle();
+
+      expect(scope.sortPredicate).toEqual('');
+      expect(scope.sortTitleName).toEqual('Title');
     });
 
-    // mock rideshares in scope
-    scope.articles = [];
-    scope.articles.push(article);
+    it("unsets any other sort", function () {
+      scope.sortDateName = 'foo';
 
-    // test expected rideshare DELETE request
-    $httpBackend.expectDELETE(/articles\/([0-9a-fA-F]{24})$/).respond(204);
+      scope.sortTitle();
 
-    // run controller
-    scope.remove(article);
-    $httpBackend.flush();
+      expect(scope.sortDateName).toEqual('Date');
+    });
 
-    // test after successful delete URL location articles lis
-    //expect($location.path()).toBe('/articles');
-    expect(scope.articles.length).toBe(0);
+    it("come from another sorted predicate", function () {
+      scope.sortPredicate = '+created';
 
-  }));
+      scope.sortTitle();
 
-  it('$scope.addArticle() should define the addTemplate', function () {
-    expect(scope.addTemplate).toBeUndefined();
-    scope.addArticle();
-    expect(scope.addTemplate).toBe('views/articles/create.html');
+      expect(scope.sortPredicate).toEqual('+title');
+    });
   });
 
-  it('$scope.addCancel() should undefine the addTemplate', function () {
-    scope.addTemplate = 'foobar';
-    scope.addCancel();
-    expect(scope.addTemplate).not.toBeDefined();
-  });
+  describe("#sortDate", function () {
+    it("cycles through the sort options", function () {
+      expect(scope.sortPredicate).toEqual('');
+      expect(scope.sortDateName).toEqual('Date');
 
-  it('$scope.editArticle() should define the addTemplate', function () {
-    expect(scope.editTemplate).toBeUndefined();
-    scope.editArticle({});
-    expect(scope.article.editTemplate).toBe('views/articles/edit.html');
-  });
+      scope.sortDate();
 
-  it('$scope.editCancel() should undefine the addTemplate', function () {
-    scope.article = {editTemplate: 'foobar'};
-    scope.editCancel();
-    expect(scope.article).not.toBeDefined();
+      expect(scope.sortPredicate).toEqual('+created');
+      expect(scope.sortDateName).toEqual('Date V');
+
+      scope.sortDate();
+
+      expect(scope.sortPredicate).toEqual('-created');
+      expect(scope.sortDateName).toEqual('Date ^');
+
+      scope.sortDate();
+
+      expect(scope.sortPredicate).toEqual('');
+      expect(scope.sortDateName).toEqual('Date');
+    });
+
+    it("unsets any other sort", function () {
+      scope.sortTitleName = 'foo';
+
+      scope.sortDate();
+
+      expect(scope.sortTitleName).toEqual('Title');
+    });
+
+    it("come from another sorted predicate", function () {
+      scope.sortPredicate = '+title';
+
+      scope.sortDate();
+
+      expect(scope.sortPredicate).toEqual('+created');
+    });
   });
 });

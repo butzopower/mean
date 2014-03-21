@@ -82,8 +82,5 @@ describe('the articles controller', function () {
         });
       });
     });
-
   });
-
-
 });

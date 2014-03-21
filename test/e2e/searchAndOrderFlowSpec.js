@@ -38,6 +38,17 @@ describe('Search flow', function () {
 
       expect(page.text()).toContain('My first article');
       expect(page.text()).toContain('My second article');
+
+    //   page.clickOn('Title');
+    //   page.clickOn('Title V');
+    //
+    //   expect(
+    //     page.text().indexOf('My second article')
+    //   ).toLessThan(
+    //     page.text().indexOf('My first article')
+    //   );
+    //
+    //   expect(page.text()).toContain('Title ^');
     });
   });
 });

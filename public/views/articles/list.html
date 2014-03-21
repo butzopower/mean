@@ -1,7 +1,13 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
 	<h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a data-ng-click="addArticle()">Create One</a>?</h1>
 
-	<div>Search: <input type="search" ng-model="query" results="5" placeholder="Search"></div>
+	<div>
+		<p>Search: <input type="search" ng-model="query" results="5" placeholder="Search"></p>
+		<p>Order By:
+			<a data-ng-click="sortTitle()">{{sortTitleName}}</a>,
+			<a data-ng-click="sortDate()">{{sortDateName}}</a>
+		</p>
+	</div>
 
 	<a data-ng-click="addArticle()">
 		<i class="glyphicon glyphicon-plus"></i> Add
@@ -10,7 +16,7 @@
 
 
 	<ul class="articles unstyled">
-		<li data-ng-repeat="article in articles | filter:query" data-ng-class="article.title | dasherize">
+		<li data-ng-repeat="article in articles | filter:query | orderBy:sortPredicate" data-ng-class="article.title | dasherize">
 			<span>{{article.created | date:'medium'}}</span> /
 			<span>{{article.user.name}}</span>
 			<h2>{{article.title}}</h2>
