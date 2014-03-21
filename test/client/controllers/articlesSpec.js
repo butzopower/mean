@@ -173,7 +173,7 @@ describe('ArticlesController', function () {
 
     // test after successful delete URL location articles lis
     //expect($location.path()).toBe('/articles');
-    expect(scope.articles.length).toBe(1);
+    expect(scope.articles.length).toBe(0);
 
   }));
 
