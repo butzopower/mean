@@ -28,7 +28,7 @@ exports.create = function (req, res) {
 
   article.save(function (err) {
     if (err) {
-      return res.send('users/signup', {
+      res.jsonp(422, {
         errors: err.errors,
         article: article
       });
@@ -36,7 +36,7 @@ exports.create = function (req, res) {
       var data = article.toObject();
       data.user = _(req.user).pick('name', 'username').value();
       data.user._id = req.user.id;
-      res.jsonp(data);
+      res.jsonp(201, data);
     }
   });
 };

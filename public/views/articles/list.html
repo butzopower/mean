@@ -1,4 +1,6 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
+	<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
+
 	<h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a data-ng-click="addArticle()">Create One</a>?</h1>
 
 	<div>

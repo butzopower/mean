@@ -41,7 +41,7 @@ var ArticleSchema = new Schema({
  */
 ArticleSchema.path('title').validate(function (title) {
   return title.length;
-}, 'Title cannot be blank');
+}, 'cannot be blank');
 
 /**
  * Statics

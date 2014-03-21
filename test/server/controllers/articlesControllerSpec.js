@@ -6,8 +6,8 @@ describe('the articles controller', function () {
     User = mongoose.model('User'),
     Article = mongoose.model('Article'),
     articlesController = require('../../../app/controllers/articles'),
-    returnPath,
     returnValue,
+    returnCode,
     subject = function (req, done) {
       User.create({
         name: 'John Doe',
@@ -18,12 +18,8 @@ describe('the articles controller', function () {
         req.user = user;
 
         articlesController.create(req, {
-          send: function (path, json) {
-            returnPath = path;
-            returnValue = json;
-            done();
-          },
-          jsonp: function (json) {
+          jsonp: function (statusCode, json) {
+            returnCode = statusCode;
             returnValue = json;
             done();
           }
@@ -67,6 +63,8 @@ describe('the articles controller', function () {
         expect(returnValue.content).toEqual('blah blah');
         expect(returnValue.user).toEqual({name: 'John Doe', username: 'jdoe', _id: req.user.id});
 
+        expect(returnCode).toEqual(201);
+
         done();
       });
     });
@@ -76,7 +74,7 @@ describe('the articles controller', function () {
         req.body = {};
         subject(req, function () {
           expect(returnValue.errors.title.message).toContain('cannot be blank');
-          expect(returnPath).toEqual('users/signup');
+          expect(returnCode).toEqual(422);
 
           done();
         });

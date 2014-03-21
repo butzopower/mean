@@ -6,6 +6,7 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
   $scope.sortTitleName = 'Title';
   $scope.sortDateName = 'Date';
   $scope.sortPredicate = '';
+  $scope.alerts = [];
 
   $scope.create = function () {
     var article = new Articles({
@@ -16,6 +17,17 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
     article.$save(function (response) {
       $scope.articles.unshift(response);
       $scope.addTemplate = undefined;
+    }, function (httpResponse) {
+      var msg = "";
+      angular.forEach(httpResponse.data.errors, function(error) {
+        error.path = error.path.charAt(0).toUpperCase() + error.path.slice(1);
+        msg += error.path + ': ' + error.message;
+      });
+
+      $scope.alerts.push({
+        type: 'danger',
+        msg: msg
+      });
     });
 
     this.title = '';
@@ -97,5 +109,9 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
       $scope.sortPredicate = '';
       $scope.sortDateName = "Date";
     }
+  };
+
+  $scope.closeAlert = function (index) {
+    $scope.alerts.splice(index, 1);
   };
 }]);

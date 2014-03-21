@@ -70,30 +70,7 @@ describe('ArticlesController', function () {
   });
 
   describe("#create", function () {
-    it('$scope.create() with valid form data should send a POST request ' +
-      'with the form input values and then ' +
-      'locate to new object URL', function () {
-
-      // fixture expected POST data
-      var postArticleData = function () {
-        return {
-          title: 'An Article about MEAN',
-          content: 'MEAN rocks!',
-          tags: 'first, second, third'
-        };
-      };
-
-      // fixture expected response data
-      var responseArticleData = function () {
-        return {
-          _id: '525cf20451979dea2c000001',
-          title: 'An Article about MEAN',
-          content: 'MEAN rocks!',
-          tags: 'first, second, third'
-        };
-      };
-
-      // fixture mock form input values
+    beforeEach(function () {
       scope.title = 'An Article about MEAN';
       scope.content = 'MEAN rocks!';
       scope.tags = 'first, second, third';
@@ -101,20 +78,59 @@ describe('ArticlesController', function () {
       scope.articles = [
         {title: 'Old Article'}
       ];
+    });
 
-      // test post request is sent
-      $httpBackend.expectPOST('articles', postArticleData()).respond(responseArticleData());
+    describe("when succesful", function () {
+      beforeEach(function () {
+        $httpBackend.when('POST', 'articles').respond({
+          _id: '525cf20451979dea2c000001',
+          title: 'An Article about MEAN',
+          content: 'MEAN rocks!',
+          tags: 'first, second, third'
+        });
+      });
 
-      // Run controller
-      scope.create();
-      $httpBackend.flush();
+      it("makes the correct request", function () {
+        $httpBackend.expectPOST('articles', {
+          title: 'An Article about MEAN',
+          content: 'MEAN rocks!',
+          tags: 'first, second, third'
+        });
+        scope.create();
+        $httpBackend.flush();
+      });
 
-      // test form input(s) are reset
-      expect(scope.title).toEqual('');
-      expect(scope.content).toEqual('');
-      expect(scope.tags).toEqual('');
-      expect(scope.addTemplate).toBeUndefined();
-      expect(scope.articles[0].title).toEqual('An Article about MEAN');
+      it("resets the form", function () {
+        scope.create();
+        $httpBackend.flush();
+        expect(scope.title).toEqual('');
+        expect(scope.content).toEqual('');
+        expect(scope.tags).toEqual('');
+        expect(scope.addTemplate).toBeUndefined();
+      });
+
+      it("updates the scope's articles", function () {
+        scope.create();
+        $httpBackend.flush();
+        expect(scope.articles[0].title).toEqual('An Article about MEAN');
+      });
+    });
+
+    describe("when the save fails", function () {
+      beforeEach(function () {
+        $httpBackend.when('POST', 'articles').respond(422, {
+          errors: {title: {message: 'cannot be Blank', path: 'title'}}
+        });
+      });
+
+      it("should show an alert message with the error", function () {
+        scope.create();
+        $httpBackend.flush();
+        expect(scope.alerts).toEqual([{
+          type: 'danger',
+          msg: 'Title: cannot be Blank'
+        }]);
+      });
     });
   });
 
@@ -288,6 +304,14 @@ describe('ArticlesController', function () {
       scope.sortDate();
 
       expect(scope.sortPredicate).toEqual('+created');
+    });
+  });
+
+  describe("#closeAlert", function () {
+    it("removes the alert from the list of alerts", function () {
+      scope.alerts.push({type: 'danger', msg: 'Some Alert'});
+      scope.closeAlert(0);
+      expect(scope.alerts.length).toEqual(0);
     });
   });
 });

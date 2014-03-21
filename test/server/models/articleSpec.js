@@ -47,7 +47,7 @@ describe('Model Article:', function () {
       article.title = '';
 
       article.save(function (err) {
-        expect(err).not.toBeNull();
+        expect(err.errors.title).not.toBeNull();
 
         done();
       });
