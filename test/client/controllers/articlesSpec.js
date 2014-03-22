@@ -235,29 +235,35 @@ describe('ArticlesController', function () {
     it('cycles through all the sort options', function () {
       expect(scope.sortPredicate).toEqual('');
       expect(scope.sortTitleName).toEqual('Title');
+      expect(scope.sortTitleDirection).toBeNull();
 
       scope.sortTitle();
 
       expect(scope.sortPredicate).toEqual('+title');
-      expect(scope.sortTitleName).toEqual('Title V');
+      expect(scope.sortTitleName).toEqual('Title');
+      expect(scope.sortTitleDirection).toEqual('down');
 
       scope.sortTitle();
 
       expect(scope.sortPredicate).toEqual('-title');
-      expect(scope.sortTitleName).toEqual('Title ^');
+      expect(scope.sortTitleName).toEqual('Title');
+      expect(scope.sortTitleDirection).toEqual('up');
 
       scope.sortTitle();
 
       expect(scope.sortPredicate).toEqual('');
-      expect(scope.sortTitleName).toEqual('Title');
+      expect(scope.sortTitleName).toEqual('Title')
+      expect(scope.sortTitleDirection).toBeNull();
     });
 
     it('unsets any other sort', function () {
       scope.sortDateName = 'foo';
+      scope.sortDateDirection = 'up';
 
       scope.sortTitle();
 
       expect(scope.sortDateName).toEqual('Date');
+      expect(scope.sortDateDirection).toBeNull();
     });
 
     it('come from another sorted predicate', function () {
@@ -273,29 +279,35 @@ describe('ArticlesController', function () {
     it('cycles through the sort options', function () {
       expect(scope.sortPredicate).toEqual('');
       expect(scope.sortDateName).toEqual('Date');
+      expect(scope.sortDateDirection).toBeNull();
 
       scope.sortDate();
 
       expect(scope.sortPredicate).toEqual('+created');
-      expect(scope.sortDateName).toEqual('Date V');
+      expect(scope.sortDateName).toEqual('Date');
+      expect(scope.sortDateDirection).toEqual('down');
 
       scope.sortDate();
 
       expect(scope.sortPredicate).toEqual('-created');
-      expect(scope.sortDateName).toEqual('Date ^');
+      expect(scope.sortDateName).toEqual('Date');
+      expect(scope.sortDateDirection).toEqual('up');
 
       scope.sortDate();
 
       expect(scope.sortPredicate).toEqual('');
       expect(scope.sortDateName).toEqual('Date');
+      expect(scope.sortDateDirection).toBeNull();
     });
 
     it('unsets any other sort', function () {
       scope.sortTitleName = 'foo';
+      scope.sortTitleDirection = 'down';
 
       scope.sortDate();
 
       expect(scope.sortTitleName).toEqual('Title');
+      expect(scope.sortTitleDirection).toBeNull();
     });
 
     it('come from another sorted predicate', function () {

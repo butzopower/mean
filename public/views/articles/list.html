@@ -3,27 +3,46 @@
 
 	<h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a data-ng-click="addArticle()">Create One</a>?</h1>
 
-	<div>
-		<p>Search: <input type="search" ng-model="query" results="5" placeholder="Search"></p>
-		<p>Order By:
-			<a data-ng-click="sortTitle()">{{sortTitleName}}</a>,
-			<a data-ng-click="sortDate()">{{sortDateName}}</a>
-		</p>
+	<div class="navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li class="navbar-text">Search:</li>
+			<li class="navbar-form" role="search">
+				<div class="form-group">
+					<input class="form-control" type="search" ng-model="query" results="5" placeholder="Search">
+				</div>
+			</li>
+			<li class="navbar-text">Order By:</li>
+			<li class="navbar-form">
+				<button class="btn btn-default" data-ng-click="sortTitle()">
+					{{sortTitleName}}
+					<i data-ng-if="sortTitleDirection" class="glyphicon glyphicon-chevron-{{sortTitleDirection}}"></i>
+				</button>
+			</li>
+			<li class="navbar-form">
+				<button class="btn btn-default" data-ng-click="sortDate()">
+					{{sortDateName}}
+					<i data-ng-if="sortDateDirection" class="glyphicon glyphicon-chevron-{{sortDateDirection}}"></i>
+				</button>
+			</li>
+		</ul>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<a data-ng-click="addArticle()">
+					<i class="glyphicon glyphicon-plus"></i> Add
+				</a>
+			</li>
+		</ul>
 	</div>
 
-	<a data-ng-click="addArticle()">
-		<i class="glyphicon glyphicon-plus"></i> Add
-	</a>
 	<div data-ng-include="addTemplate"></div>
-
 
 	<ul class="articles list-group">
 		<li data-ng-repeat="article in articles | filter:query | orderBy:sortPredicate" data-ng-class="article.title | dasherize" class="list-group-item">
-			<span>{{article.created | date:'medium'}}</span> /
-			<span>{{article.user.name}}</span>
+			<span class="badge">{{article.created | date:'medium'}} / {{article.user.name}}</span>
 			<h2>{{article.title}}</h2>
-			<div><span class="label label-primary" data-ng-repeat="tag in article.tags">{{tag}}</span></div>
-			<div>{{article.content}}</div>
+			<p><span class="label label-primary" data-ng-repeat="tag in article.tags">{{tag}}</span></p>
+			<p>{{article.content}}</p>
 			<div data-ng-show="global.user._id == article.user._id">
 				<a class="btn edit" data-ng-click="editArticle(article)">
 					<i class="glyphicon glyphicon-edit"></i> Edit

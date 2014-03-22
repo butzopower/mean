@@ -5,8 +5,11 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
 
   $scope.sortTitleName = 'Title';
   $scope.sortDateName = 'Date';
+  $scope.sortTitleDirection = null;
+  $scope.sortDateDirection = null;
   $scope.sortPredicate = '';
   $scope.alerts = [];
+
 
   $scope.create = function () {
     var article = new Articles({
@@ -85,29 +88,39 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
 
   $scope.sortTitle = function () {
     $scope.sortDateName = 'Date';
+    $scope.sortDateDirection = null;
+
     if ($scope.sortPredicate === '' || $scope.sortPredicate.indexOf('created') > 0) {
       $scope.sortPredicate = '+title';
-      $scope.sortTitleName = 'Title V';
+      $scope.sortTitleName = 'Title';
+      $scope.sortTitleDirection = 'down';
     } else if ($scope.sortPredicate === '+title') {
       $scope.sortPredicate = '-title';
-      $scope.sortTitleName = 'Title ^';
+      $scope.sortTitleName = 'Title';
+      $scope.sortTitleDirection = 'up';
     } else {
       $scope.sortPredicate = '';
       $scope.sortTitleName = 'Title';
+      $scope.sortTitleDirection = null;
     }
   };
 
   $scope.sortDate = function () {
     $scope.sortTitleName = 'Title';
+    $scope.sortTitleDirection = null;
+
     if ($scope.sortPredicate === '' || $scope.sortPredicate.indexOf('title') > 0) {
       $scope.sortPredicate = '+created';
-      $scope.sortDateName = 'Date V';
+      $scope.sortDateName = 'Date';
+      $scope.sortDateDirection = 'down';
     } else if ($scope.sortPredicate === '+created') {
       $scope.sortPredicate = '-created';
-      $scope.sortDateName = 'Date ^';
+      $scope.sortDateName = 'Date';
+      $scope.sortDateDirection = 'up';
     } else {
       $scope.sortPredicate = '';
       $scope.sortDateName = 'Date';
+      $scope.sortDateDirection = null;
     }
   };
 
