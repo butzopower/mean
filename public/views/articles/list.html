@@ -17,8 +17,8 @@
 	<div data-ng-include="addTemplate"></div>
 
 
-	<ul class="articles unstyled">
-		<li data-ng-repeat="article in articles | filter:query | orderBy:sortPredicate" data-ng-class="article.title | dasherize">
+	<ul class="articles list-group">
+		<li data-ng-repeat="article in articles | filter:query | orderBy:sortPredicate" data-ng-class="article.title | dasherize" class="list-group-item">
 			<span>{{article.created | date:'medium'}}</span> /
 			<span>{{article.user.name}}</span>
 			<h2>{{article.title}}</h2>
