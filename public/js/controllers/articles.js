@@ -127,4 +127,8 @@ angular.module('mean.articles').controller('ArticlesController', ['$scope', '$st
   $scope.closeAlert = function (index) {
     $scope.alerts.splice(index, 1);
   };
+
+  $scope.anyArticles = function () {
+    return $scope.articles && $scope.articles.length;
+  };
 }]);

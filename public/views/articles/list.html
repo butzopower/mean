@@ -1,9 +1,9 @@
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
 	<alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
 
-	<h1 data-ng-hide="!articles || articles.length">No articles yet. <br> Why don't you <a data-ng-click="addArticle()">Create One</a>?</h1>
+	<h1 data-ng-hide="anyArticles()">No articles yet. <br> Why don't you <a data-ng-click="addArticle()">Create One</a>?</h1>
 
-	<div class="navbar navbar-default">
+	<div data-ng-hide="!anyArticles()" class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li class="navbar-text">Search:</li>
 			<li class="navbar-form" role="search">
@@ -41,7 +41,9 @@
 		<li data-ng-repeat="article in articles | filter:query | orderBy:sortPredicate" data-ng-class="article.title | dasherize" class="list-group-item">
 			<span class="badge">{{article.created | date:'medium'}} / {{article.user.name}}</span>
 			<h2>{{article.title}}</h2>
-			<p><span class="label label-primary" data-ng-repeat="tag in article.tags">{{tag}}</span></p>
+			<p>
+				<span class="label label-primary" data-ng-repeat="tag in article.tags track by $index">{{tag}}</span>
+			</p>
 			<p>{{article.content}}</p>
 			<div data-ng-show="global.user._id == article.user._id">
 				<a class="btn edit" data-ng-click="editArticle(article)">
