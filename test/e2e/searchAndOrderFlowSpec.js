@@ -5,22 +5,23 @@ var page = require('./support/page.js').page;
 
 describe('Search flow', function () {
   describe('Searching for article containing text', function () {
-    var addArticle = function (params) {
-      page.clickOn('Add');
-
-      page.fillIn('Title', params.title);
-      page.fillIn('Content', params.content);
-      page.fillIn('Tags', params.tags);
-      page.clickOn('Submit');
-    };
-
     beforeEach(function () {
       user.signin();
 
       page.get('/#!/articles');
 
-      addArticle({title: 'My first article', content: 'Some content', tags: 'intro, hello, first'});
-      addArticle({title: 'My second article', content: 'Some other content', tags: 'hello'});
+      page.clickOn('Create One');
+
+      page.fillIn('Title', 'My first article');
+      page.fillIn('Content', 'Some content');
+      page.fillIn('Tags', 'intro, hello, first');
+      page.clickOn('Submit');
+
+      page.clickOn('Add');
+      page.fillIn('Title', 'My second article');
+      page.fillIn('Content', 'Some other content');
+      page.fillIn('Tags', 'hello');
+      page.clickOn('Submit');
     });
 
     it('should only show', function () {

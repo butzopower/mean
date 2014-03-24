@@ -12,7 +12,7 @@ describe('Article flow', function () {
     it('should be able to add a complete article', function () {
       page.get('/#!/articles');
 
-      page.clickOn('Add');
+      page.clickOn('Create One');
 
       expect(page.text()).toContain('Tags');
 
