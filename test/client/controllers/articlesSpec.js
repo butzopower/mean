@@ -252,7 +252,7 @@ describe('ArticlesController', function () {
       scope.sortTitle();
 
       expect(scope.sortPredicate).toEqual('');
-      expect(scope.sortTitleName).toEqual('Title')
+      expect(scope.sortTitleName).toEqual('Title');
       expect(scope.sortTitleDirection).toBeNull();
     });
 
